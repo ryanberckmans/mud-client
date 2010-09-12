@@ -14,11 +14,6 @@ class WebMudServer extends SocketServer
 	function create()
 	{
 		parent::create();
-		
-		// Establish a Policy Server for Flash clients (optional) //
-		$this->policy_server = new PolicyServer(HOST, PORT_POLICY);		
-		$this->policy_server->create();
-		
 	}
 	
 	function process()
@@ -187,8 +182,6 @@ class WebMudServer extends SocketServer
 
 				echo "Attempting to connect client [$client] to $host on $port...\n";
 				
-				$cObj->send(json_encode(array("message"=>"Attempting connection to $host:$port...<br>")));
-				
 				$conn = socket_create(AF_INET, SOCK_STREAM, 0);
 							
 				if (socket_connect($conn, $host, $port))
@@ -199,8 +192,6 @@ class WebMudServer extends SocketServer
 					$cObj->send(json_encode(array("conn_status" => "connected")));
 									
 					echo "Connected [$client] to $host\n";
-					
-					$cObj->send(json_encode(array("message"=>"Connected!<br>")));
 				} else {
 					$cObj->send(json_encode(array("message"=>"Could not connect to $host on port $port<br>")));
 				}

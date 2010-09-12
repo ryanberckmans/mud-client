@@ -31,7 +31,7 @@ var m_nw, m_n, m_ne, m_e, m_se, m_s, m_sw, m_w, m_up, m_down, m_in, m_out;
 var map;
 
 // Change this as necessary //
-var wshost = "ws://127.0.0.1:12346/phudbase/wm_server/server.php";
+var wshost = "ws://127.0.0.1:12346/server/server.php";
 
 var mudhost;
 var mudport;
@@ -110,6 +110,7 @@ $(document).ready(function(){
 	
 	socket.onopen = function() {
     	set_connected_phudbase();
+      mud_login();
     }
 	
 	socket.onmessage = function(evt) {				
@@ -125,14 +126,18 @@ $(document).ready(function(){
     }
 });	
 
+var MUD = "medievia.com 4000"
+function mud_login() {
+  if ( sendDirect("PHUD:CONNECT " + MUD)) {
+     postLogin();
+  }
+}
+
 function sendDirect(data) 
 {
-   	if (data != "")
+  if (data != "")
 	{	
-   		if (mode == "websocket")	   			
    			socket.send(data);
-   		else
-   			sendTextToFlash(data);
 		return true;
 	} else {
 		return false;
@@ -157,8 +162,9 @@ function send()
 function postLogin() 
 {
 	document.getElementById("user_input").value = "";
-	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});	
-	$("#login_area").remove();	
+	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});
+  $("#c_right").hide();
+  $("#c_output").css("margin-right", "auto");
 }
 
 function set_connected_phudbase()

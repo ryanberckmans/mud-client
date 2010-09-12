@@ -52,8 +52,8 @@ td {vertical-align: top;}
 }
 
 #c_header {			
-	height: 50px;			
-	padding-top: 10px;		
+	height: 0px;			
+	padding-top: 3px;		
 }
 
 #header {			
@@ -71,7 +71,7 @@ td {vertical-align: top;}
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	width: 200px;			
+	width: 200px;
 }
 
 #output {

@@ -41,35 +41,23 @@
 
 			$("#interface").height($(window).height() - 20);
 
-			$("#output, #scroller, #right").height($("#interface").height() - 100);
+			$("#output, #scroller, #right").height($("#interface").height() - 50);
         	
 			$(window).resize(function() {
 				$("#interface").height($(window).height() - 20);
 
-				$("#output, #scroller, #right").height($("#interface").height() - 100);
+				$("#output, #scroller, #right").height($("#interface").height() - 50);
 			});
-			
 		});
 	</script>
 </head>
 <body>	
 	<div id="interface">
-        <div id="c_header">
-        	<div id="header">
-            	<h1>PHudBase-WebMud Client Demo</h1>
-            </div>
+    <div id="c_header">
 		</div>           
 		<div id="c_wrap"> 
             <div id="c_output">            	
             	<div id="output">            		
-<strong>Welcome to the PHudBase-WebMud Client Demo!</strong><br><br>
-Enter your favorite MUDs Server and Port and we'll get you hooked up.<br><br>
-Let me know at jfitzdela (@) gmail.com if something doesn't work like you'd expect.<br><br>
-Happy MUDding!<br><br>		
-<div id='login_area' style='width: 400px; background: #222; border: 1px solid #777; margin: 5px; padding: 5px;'><form onsubmit='if (sendDirect("PHUD:CONNECT " + document.getElementById("mhost").value + " " + document.getElementById("mport").value)) {postLogin();} return false;'>
-Host: <input type='text' id='mhost' size='15' value=''> Port: <input type='text' id='mport' size='5' value=''> <input type='submit' value='Connect'>
-</form>
-</div>
             	</div>
             </div>
             <div id="c_right">

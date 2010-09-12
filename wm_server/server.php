@@ -1,4 +1,4 @@
-#!/php -q
+#!/usr/bin/env php
 <?php
 	/*******************************************************************************************************************
 	 * 
@@ -23,7 +23,6 @@
 	 */	
 	define("HOST", "127.0.0.1");	
 	define("PORT", "12346");	
-	define("PORT_POLICY", "843"); // Leave this be: may require running ./server.php as root //
 	
 	/*
 	 * The following defines are for the WebSocket Handshake, and should be set according to your server.
@@ -47,6 +46,5 @@
 			
 	// Process reads/writes over the game server //
 	$server->process();
-	
 	
 ?>
