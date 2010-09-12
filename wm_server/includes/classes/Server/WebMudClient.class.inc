@@ -12,7 +12,6 @@ class WebMudClient extends SocketClient
 	private $mud_conn;
 	private $connected_mud;	
 	private $buffer;
-	private $read_count;
 	
 	private $lastInput;	
 	private $clientType = GC_WEBSOCKET;
@@ -85,6 +84,10 @@ class WebMudClient extends SocketClient
 	{
 		return $this->wm_no_negotiate;
 	}
+
+  function setBuffer($new_buffer) {
+    $this->buffer = $new_buffer;
+  }
 	
 	function addToBuffer($string)
 	{
@@ -101,17 +104,6 @@ class WebMudClient extends SocketClient
 	function clearBuffer()
 	{
 		$this->buffer = "";
-		$this->read_count = 0;
-	}
-	
-	function getReadCount()
-	{
-		return $this->read_count;
-	}
-	
-	function bumpReadCount()
-	{
-		$this->read_count++;
 	}
 	
 	function setClientType($type)

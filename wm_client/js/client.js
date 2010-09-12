@@ -150,10 +150,7 @@ function send()
 
 	print(s, "#999");
 	
-	if (mode == "websocket")
-		socket.send(s);
-	else
-		sendTextToFlash(s);
+	socket.send(s);
 	
 	document.getElementById("user_input").value = "";
 	return true;	
@@ -199,7 +196,7 @@ function print(s) {
     if (typeof(arguments[1]) != undefined)
         color = arguments[1];
     
-    ow_Write("<br><span style='color:"+color+ "'>&rarr; " + s + "</span><br>");
+    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
 }
 
 function handle_read(s)

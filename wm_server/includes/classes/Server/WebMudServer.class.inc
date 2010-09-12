@@ -37,40 +37,20 @@ class WebMudServer extends SocketServer
 						if (is_resource($mc)) {		
               $input = "";
               
-              //$input = @socket_read($mc, 16384, PHP_BINARY_READ);
-              $flag = @socket_recv($mc,$input,1024,MSG_DONTWAIT);
-              
-              if ($flag === 0) {	
+              if (@socket_recv($mc,$input,16384,MSG_DONTWAIT) === 0) {	
                 // We lost the connection //
                 $this->on_wm_disconnect($client->getID());
-                
-								if ($input == "" && $client->getBuffer() == "") {
-									break;
-                }
-								
-							} elseif ($input != "") {
-                $cbuf = $client->addToBuffer($input);		            			
-              } else {
-                $cbuf = $client->getBuffer();
-                $client->bumpReadCount();
-              }
-				      
-//				            if (strrpos($cbuf, "\r\n") == strlen($cbuf) - 2 ||
-//				            	strrpos($cbuf, "\n\r") == strlen($cbuf) - 2 ||				            	
-//				            	strrpos($cbuf, chr(TELNET_EOR)) == strlen($cbuf) - 1 ||
-//								strrpos($cbuf, chr(TELNET_IAC) . chr(TELNET_GA)) == strlen($cbuf) - 2) |
-//								($cbuf != "" && $client->getReadCount() >= 3))
-//							if ($cbuf[strlen($cbuf) - 1] == "\r" ||
-//                  $cbuf[strlen($cbuf) - 1] == "\n" ||				            	
-//                  $cbuf[strlen($cbuf) - 1] == chr(TELNET_EOR) ||
-//                  $cbuf[strlen($cbuf) - 2] . $cbuf[strlen($cbuf) - 1] == chr(TELNET_IAC) . chr(TELNET_GA) || 
-//                  $cbuf != "" && $input == "") {
-              if ( strlen($cbuf) > 0 ) { 
+							} 
+
+              if (strlen($input) > 0 ) {
+                $client->addToBuffer($input);		            			
+              } 
+
+              if ( strlen($client->getBuffer()) > 0 ) {
+                $this->on_wm_receive($client->getID(), $client->getBuffer());
                 $client->clearBuffer();
-                
-                // Trigger the method for receiving data FROM the MUD //
-								$this->on_wm_receive($client->getID(), $cbuf);		            	
               }
+
 						} // end is_resource
 					} // client -> connectedMud()
 				} // foreach clients
