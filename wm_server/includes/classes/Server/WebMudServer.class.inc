@@ -30,64 +30,60 @@ class WebMudServer extends SocketServer
 			{
 				foreach ($clients as $key => $client)
 				{		
-					if ($client->connectedMUD())
-					{					
+					if ($client->connectedMUD()) {					
 						$mc = $client->getMudConnection();					
 						
 						// If it's a good socket //
-						if (is_resource($mc))
-						{		
-							$input = "";
-							
-							//$input = @socket_read($mc, 16384, PHP_BINARY_READ);
-							$flag = @socket_recv($mc,$input,1024,MSG_DONTWAIT);
-							
-							if ($flag === 0)
-							{	
-								// We lost the connection //
-								$this->on_wm_disconnect($client->getID());
-								
-								if ($input == "" && $client->getBuffer() == "")
+						if (is_resource($mc)) {		
+              $input = "";
+              
+              //$input = @socket_read($mc, 16384, PHP_BINARY_READ);
+              $flag = @socket_recv($mc,$input,1024,MSG_DONTWAIT);
+              
+              if ($flag === 0) {	
+                // We lost the connection //
+                $this->on_wm_disconnect($client->getID());
+                
+								if ($input == "" && $client->getBuffer() == "") {
 									break;
+                }
 								
-							} elseif ($input != "") 
-				            {
-				            	$cbuf = $client->addToBuffer($input);		            			
-				            } else
-				            {
-				            	$cbuf = $client->getBuffer();
-				            	$client->bumpReadCount();
-				            }
-				            
+							} elseif ($input != "") {
+                $cbuf = $client->addToBuffer($input);		            			
+              } else {
+                $cbuf = $client->getBuffer();
+                $client->bumpReadCount();
+              }
+				      
 //				            if (strrpos($cbuf, "\r\n") == strlen($cbuf) - 2 ||
 //				            	strrpos($cbuf, "\n\r") == strlen($cbuf) - 2 ||				            	
 //				            	strrpos($cbuf, chr(TELNET_EOR)) == strlen($cbuf) - 1 ||
 //								strrpos($cbuf, chr(TELNET_IAC) . chr(TELNET_GA)) == strlen($cbuf) - 2) |
 //								($cbuf != "" && $client->getReadCount() >= 3))
-							if ($cbuf[strlen($cbuf) - 1] == "\r" ||
-				            	$cbuf[strlen($cbuf) - 1] == "\n" ||				            	
-				            	$cbuf[strlen($cbuf) - 1] == chr(TELNET_EOR) ||
-								$cbuf[strlen($cbuf) - 2] . $cbuf[strlen($cbuf) - 1] == chr(TELNET_IAC) . chr(TELNET_GA) || 
-								$cbuf != "" && $input == "")
-			            	{
-			           			$client->clearBuffer();
-			           			
-			            		// Trigger the method for receiving data FROM the MUD //
+//							if ($cbuf[strlen($cbuf) - 1] == "\r" ||
+//                  $cbuf[strlen($cbuf) - 1] == "\n" ||				            	
+//                  $cbuf[strlen($cbuf) - 1] == chr(TELNET_EOR) ||
+//                  $cbuf[strlen($cbuf) - 2] . $cbuf[strlen($cbuf) - 1] == chr(TELNET_IAC) . chr(TELNET_GA) || 
+//                  $cbuf != "" && $input == "") {
+              if ( strlen($cbuf) > 0 ) { 
+                $client->clearBuffer();
+                
+                // Trigger the method for receiving data FROM the MUD //
 								$this->on_wm_receive($client->getID(), $cbuf);		            	
-				            }
-						} 
-					}
-				}	
-			}
+              }
+						} // end is_resource
+					} // client -> connectedMud()
+				} // foreach clients
+			} // is_array clients
 			
 			// If we have a policy server, process //
-			if (is_object($this->policy_server))
+			if (is_object($this->policy_server)) {
 				$this->policy_server->process();
+      }
 
-				
 			// Things get weird without a little pause... //
-			usleep(10000);
-		}				
+			usleep(100000);
+		} // while(true)
 	}
 		
 	function on_read($client = -1, $data = "")
@@ -237,7 +233,7 @@ class WebMudServer extends SocketServer
 			$data = stripTelnet($data);
 			
 			// Convert to UTF-8 for processing //
-			$buf = utf8_encode($buf);
+			$data = utf8_encode($data);
 
 			// Are we logging for the client? //
 			if ($cObj->isLogging())

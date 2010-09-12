@@ -124,7 +124,7 @@ class SocketServer
 		    // Setup clients listen socket for reading		  
 		    for ($i = 0; $i < $this->max_clients; $i++)
 		    {
-		        if (is_resource($this->clients[$i]->socket))
+          if ( array_key_exists($i, $this->clients) && is_resource($this->clients[$i]->socket))
 		            $this->read[$i + 1] = $this->clients[$i]->socket ;
 		    }
 		    
@@ -137,7 +137,7 @@ class SocketServer
 		    {
 		        for ($i = 0; $i < $this->max_clients; $i++)
 		        {
-					if (!is_object($this->clients[$i]))
+					if (!array_key_exists($i, $this->clients))
 					{
 						$this->clients[$i] = new $client_class($i, socket_accept($this->socket));
 						print("Client $i connected.\n");						
@@ -215,7 +215,7 @@ class SocketServer
 	{
 		for ($i = 0; $i < $this->max_clients; $i++) // for each client
 	    {    	
-	        if (in_array($this->clients[$i]->socket, $this->read))
+	        if (array_key_exists($i, $this->clients) && in_array($this->clients[$i]->socket, $this->read))
 	        {
 	            //$input = socket_read($this->clients[$i]->socket, 2048, PHP_BINARY_READ);
 	           	@socket_recv($this->clients[$i]->socket, $input, 2048, MSG_DONTWAIT);

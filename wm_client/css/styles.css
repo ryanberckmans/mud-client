@@ -74,6 +74,11 @@ td {vertical-align: top;}
 	width: 200px;
 }
 
+@font-face {
+	font-family: medievia;
+	src: local('Medievia Sans Mono'), url('http://127.0.0.1/client/medievia.ttf');
+}
+
 #output {
 	border: 1px solid #464646;
 	overflow: auto;
