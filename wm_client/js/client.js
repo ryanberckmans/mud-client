@@ -149,6 +149,15 @@ function send()
 	s = document.getElementById("user_input").value;
 
 	print(s, "#999");
+
+  if (down_arrow_cmds.length > 0 ) {
+    up_arrow_cmds.push(s); // resave the old copy of a historical cmd we're browsing
+  }
+  while ( down_arrow_cmds.length > 1 ) {
+    up_arrow_cmds.push( down_arrow_cmds.pop()); // save all the commands we scrolled through already
+  }
+  down_arrow_cmds.pop(); // never save the last cmd in down_arrow, because it is the transient coomand the user half-typed in. 
+  up_arrow_cmds.push(s); // save the current command
 	
 	socket.send(s);
 	
@@ -158,10 +167,43 @@ function send()
 
 function postLogin() 
 {
+  keyboard_handlers();
 	document.getElementById("user_input").value = "";
 	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});
   $("#c_right").hide();
   $("#c_output").css("margin-right", "auto");
+}
+
+function user_input_down_arrow(evt) {
+  if ( down_arrow_cmds.length > 0 ) {
+    up_arrow_cmds.push( document.getElementById("user_input").value );
+    document.getElementById("user_input").value = down_arrow_cmds.pop();
+  } else {
+    document.getElementById("user_input").value = "";
+  }
+}
+
+var down_arrow_cmds = [];
+var up_arrow_cmds = [];
+
+function user_input_up_arrow(evt) {
+  // command scrollback
+  if ( up_arrow_cmds.length > 0 ) {
+    down_arrow_cmds.push(document.getElementById("user_input").value);
+    document.getElementById("user_input").value = up_arrow_cmds.pop();
+  }
+}
+
+function keyboard_handlers() {
+  $("#user_input").keydown( function( evt ) {
+    if (evt.keyCode == '40') { // down arrow
+      evt.preventDefault();
+      user_input_down_arrow(evt);
+    } else if (evt.keyCode == '38') { // up arrow
+      evt.preventDefault();
+      user_input_up_arrow(evt);
+    }
+  });
 }
 
 function set_connected_phudbase()

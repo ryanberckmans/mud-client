@@ -99,7 +99,7 @@
             <div class="clear"></div>
             
             <div id="c_footer">
-            	<form id="data_form" style="display: none; text-align: center;" onsubmit="send(); return false;">
+            	<form autocomplete="off" id="data_form" style="display: none; text-align: center;" onsubmit="send(); return false;">
             		<input id="user_input" type="text" value="">            		
             	</input>
             </div>
