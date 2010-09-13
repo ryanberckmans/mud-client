@@ -84,7 +84,7 @@
 	    $string = str_replace(chr(TELNET_IAC) . chr(TELNET_GA), "<br>", $string);  // IAC GA //  
 	    
 	    // Strip any other nasties //
-	    $string = preg_replace("/[^[:print:]|\s]/","",$string);   
+	    //$string = preg_replace("/[^[:print:]|\s]/","",$string);   
    	
 		return $string;  
    	

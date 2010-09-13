@@ -197,17 +197,9 @@ class WebMudServer extends SocketServer
 
 		if (is_object($cObj))
 		{
-			$data = $this->handle_ATCP($client, $data);
-			
-			$data = $this->handle_MXP($client, $data);
-			
 			// Convert < and > so we don't lose output //
 			$data = str_replace("<", "&lt;", $data);
 			$data = str_replace(">", "&gt;", $data);
-			
-			// Convert MXP_OPEN and MXP_CLOSE to preserve MXP tags //
-			$data = str_replace("MXP_OPEN", "<", $data);
-			$data = str_replace("MXP_CLOSE", ">", $data);
 			
 			// Process Telnet data //
 			$data = stripTelnet($data);
@@ -216,11 +208,13 @@ class WebMudServer extends SocketServer
 			$data = utf8_encode($data);
 
 			// Are we logging for the client? //
-			if ($cObj->isLogging())
-				$cObj->addLog($data);
+			//if ($cObj->isLogging())
+      //				$cObj->addLog($data);
 			
 			// Kick it to the client //
-			$cObj->send(json_encode(array("message" => $data)));
+      $json = json_encode(array("message" => $data));
+      echo $json;
+			$cObj->send($json);
 		}		
 	}
 	
@@ -233,21 +227,21 @@ class WebMudServer extends SocketServer
 		if (substr_count($input, chr(TELNET_IAC) . chr(TELNET_WILL) . chr(TELNET_ATCP)) > 0)
 		{
 			echo "ATCP on for client [$client]\n";
-			@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_DO) . chr(TELNET_ATCP));
+			//@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_DO) . chr(TELNET_ATCP));
 						
 			// Also send what we WILL do //
 			//hello <client "key"> <client version> \n <supported module list>
-			$this->send_ATCP($client, "hello PhudClient 1.0\nchar_vitals 1\nmap_display 1");
+			//$this->send_ATCP($client, "hello PhudClient 1.0\nchar_vitals 1\nmap_display 1");
 		}
 		
 		// Handle MXP //
 		if (substr_count($input, chr(TELNET_IAC) . chr(TELNET_WILL) . chr(TELNET_MXP)) > 0)			
 		{
 			echo "MXP on for client [$client]\n";
-			@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_DO) . chr(TELNET_MXP));						
+			//@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_DO) . chr(TELNET_MXP));						
 		} else {
 			echo "Negotiating MXP on for client [$client]\n";
-			@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_WILL) . chr(TELNET_MXP));
+			//@socket_write($cObj->getMudConnection(),chr(TELNET_IAC) . chr(TELNET_WILL) . chr(TELNET_MXP));
 		}
 		   	
 		$cObj->setNoNegotiate();

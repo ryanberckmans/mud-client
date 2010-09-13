@@ -76,7 +76,7 @@ td {vertical-align: top;}
 
 @font-face {
 	font-family: medievia;
-	src: local('Medievia Sans Mono'), url('http://127.0.0.1/client/medievia.ttf');
+	src: url(http://127.0.0.1/client/medievia.ttf) format("truetype");
 }
 
 div#output br {margin-top: 20px; margin-bottom: 20px; }
@@ -87,7 +87,7 @@ div#output br {margin-top: 20px; margin-bottom: 20px; }
 	overflow-x: hidden;
 	overflow-y: auto;
 	padding: 5px;
-	font-family: monospace;
+	font-family: medievia;
 	font-size: 11px;
 	word-wrap: break-word;
 	white-space: pre-wrap;

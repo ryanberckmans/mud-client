@@ -202,13 +202,20 @@ function print(s) {
 function handle_read(s)
 {
 	console.log(s);
+
+  for( i = 128; i < 256 ; i++ ) {
+      var hex = i.toString(16);
+      var utf8 = new RegExp("\\\\u00" + hex, "gi");
+      var html = "&#" + i.toString() + ";";
+      s = s.replace( utf8, html );
+  }
+
 	data = eval("(" + s + ")");
-	
-	// Check for ATCP messages ( //
-	handle_ATCP(data);
-	
-	// Output a standard message //
-	if (data.message) ow_Write(data.message);
+
+  // Output a standard message //
+	if (data.message) {
+    ow_Write(data.message);
+  }
 	
 	// Write a WebMud server status message //
 	if (data.server_status) ss_Write(data.server_status);
