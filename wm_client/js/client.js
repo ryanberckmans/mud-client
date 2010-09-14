@@ -157,7 +157,10 @@ function send()
     up_arrow_cmds.push( down_arrow_cmds.pop()); // save all the commands we scrolled through already
   }
   down_arrow_cmds.pop(); // never save the last cmd in down_arrow, because it is the transient coomand the user half-typed in. 
-  up_arrow_cmds.push(s); // save the current command
+
+  if (s.length > 0) {
+     up_arrow_cmds.push(s); // save the current command unless its a simple return
+  } 
 	
 	socket.send(s);
 	
@@ -238,7 +241,7 @@ function print(s) {
     if (typeof(arguments[1]) != undefined)
         color = arguments[1];
     
-    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
+    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span><br>");
 }
 
 function handle_read(s)
@@ -284,6 +287,10 @@ function handle_read(s)
 function ow_Write(text)
 {	
 	var objDiv = window.top.document.getElementById("output");
+
+  if( $("#output").children().length > 50 ) {
+    $("#output").children().slice(0,5).remove();
+  }
 		
 	objDiv.innerHTML += text;
 	
