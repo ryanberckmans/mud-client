@@ -75,7 +75,23 @@
 	    
 	    // Remove rogue ESC's //
 	    $string = str_replace(chr(27), "", $string);
-	    
+
+	    $string = str_replace( chr(TELNET_ECHO), "", $string);
+      $string = str_replace( chr(TELNET_ETX), "", $string);
+      $string = str_replace( chr(TELNET_EOT), "", $string);
+      $string = str_replace( chr(TELNET_MXP), "", $string);
+      
+      $string = str_replace( chr(TELNET_EOR), "", $string);
+      $string = str_replace( chr(TELNET_SE), "", $string);
+      $string = str_replace( chr(TELNET_GA), "", $string);
+      $string = str_replace( chr(TELNET_SB), "", $string);
+      
+      $string = str_replace( chr(TELNET_WILL), "", $string);
+      $string = str_replace( chr(TELNET_WONT), "", $string);
+      $string = str_replace( chr(TELNET_DO), "", $string);
+      $string = str_replace( chr(TELNET_DONT), "", $string);
+      $string = str_replace( chr(TELNET_IAC), "", $string);
+
 		// Convert CR/LFs and such to HTML breaks //
 		$string = str_replace("\r\n", "<br>", $string);
 		$string = str_replace("\n\r", "<br>", $string);    	    
