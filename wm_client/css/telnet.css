@@ -25,15 +25,6 @@
 .tnc_cyan_b {color: #00ffff; font-weight:bold; }
 .tnc_white_b {color: #ffffff; font-weight:bold; }
 
-b .tnc_black {color: #7f7f7f;}
-b .tnc_red {color: #ff0000;}
-b .tnc_green {color: #00ff00;}
-b .tnc_yellow {color: #ffff00;}
-b .tnc_blue {color: #5c5cff;}
-b .tnc_magenta {color: #ff00ff;}
-b .tnc_cyan {color: #00ffff;}
-b .tnc_white {color: #ffffff;}
-
 .tnc_bg_black {background-color: #000000;}
 .tnc_bg_red {background-color: maroon;}
 .tnc_bg_green {background-color: green;}

@@ -11,50 +11,28 @@ $.get("output-grammar.txt", function(g) {
       
 var mud_client = {
   
-  translate_color_codes: function(msg) {
-    function match(m) {
-      switch(m) {
-      case "\u001b\[1m":   return mud_client.bold_on();
-      case "\u001b\[22m":  return mud_client.bold_off();
-      case "\u001b\[0m": return mud_client.reset();
-      case "\u001b\[00m": return mud_client.reset();
+  input_grammar: null,
+  input_parser: null,
 
-      // foreground colors
-      case "\u001b\[30m": return mud_client.color_on("black");
-      case "\u001b\[31m": return mud_client.color_on("red");
-      case "\u001b\[32m": return mud_client.color_on("green");
-      case "\u001b\[33m": return mud_client.color_on("yellow");
-      case "\u001b\[34m": return mud_client.color_on("blue");
-      case "\u001b\[35m": return mud_client.color_on("magenta");
-      case "\u001b\[36m": return mud_client.color_on("cyan");
-      case "\u001b\[37m": return mud_client.color_on("white");
-
-      default:
-        alert("error matched a non-existent color code");
-        return "";
-      }
-    }
-    
-    var re = /\u001b\[1m|\u001b\[22m|\u001b\[00?m|\u001b\[30m|\u001b\[31m|\u001b\[32m|\u001b\[33m|\u001b\[34m|\u001b\[35m|\u001b\[36m|\u001b\[37m/g;
-
-    msg = msg.replace( re, match );
-
-    return msg;
-  },
-
+  output_grammar: null,
+  output_parser: null,
+  
   color: null,
+  color_is_bold: false,
   bold: false,
   
   color_on: function(color) {
     var s = "";
     
-    if ( this.color == color ) {
+    if ( this.color == color && this.color_is_bold == this.bold) {
       return s;
     }
     
     s += this.color_off();
-    s += "<span class='tnc_" + color + "'>";
+
+    this.color_is_bold = this.bold
     this.color = color;
+    s += "<span class='tnc_" + color + "'>";
     
     return s;
   },
@@ -65,41 +43,35 @@ var mud_client = {
       s = "</span>";
       this.color = null;
     }
-    
-    return s;
-  },
-  
-  reset: function() {
-    var s = "";
-    s += this.color_off();
-    s += this.bold_off();
     return s;
   },
   
   bold_on: function() {
     var s = ""
-    if ( ! this.bold ) { 
-      this.bold = true; 
-      s = "<b>"; 
+    this.bold = true;
+    if ( this.color && !this.color_is_bold ) {
+      this.color_is_bold = true;
+      s += "</span><span class='tnc_" + this.color + "_b'>";
     }
     return s;
   },
   
   bold_off: function() {
-    var s = "";
-    if ( this.bold ) { 
-      this.bold = false; 
-      s = "</b>"; 
+    var s = ""
+    this.bold = false;
+    if ( this.color && this.color_is_bold ) {
+      this.color_is_bold = false;
+      s += "</span><span class='tnc_" + this.color + "'>";
     }
-    
     return s;
   },
-  
-  input_grammar: null,
-  input_parser: null,
 
-  output_grammar: null,
-  output_parser: null,
+  reset: function() {
+    var s = "";
+    this.bold = false;
+    s += this.color_off();
+    return s;
+  },
   
   send: function(cmd) {
     print(cmd, "#999"); // echo
