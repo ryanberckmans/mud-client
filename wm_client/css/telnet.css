@@ -5,17 +5,25 @@
 
 .tnc_inverse {color: black; background: white;}
 
-.tnc_black {color: #464646;}
-.tnc_red {color: red;}
-.tnc_green {color: green;}
-.tnc_yellow {color: yellow;}
-.tnc_blue {color: blue;}
-.tnc_magenta {color: magenta;}
-.tnc_cyan {color: cyan;}
-.tnc_white {color: white;}
+.tnc_black {color: #000000;}
+.tnc_red {color: #cd0000;}
+.tnc_green {color: #00cd00;}
+.tnc_yellow {color: #cdcd00;}
+.tnc_blue {color: #0000ee;}
+.tnc_magenta {color: #cd00cd;}
+.tnc_cyan {color: #00cdcd;}
+.tnc_white {color: #e5e5e5;}
 
-b .tnc_green {color: #00FF00; }
-b .tnc_blue {color: #5C5CFF; }
+b {
+    .tnc_black {color: #7f7f7f;}
+    .tnc_red {color: #ff0000;}
+    .tnc_green {color: #00ff00;}
+    .tnc_yellow {color: #ffff00;}
+    .tnc_blue {color: #5c5cff;}
+    .tnc_magenta {color: #ff00ff;}
+    .tnc_cyan {color: #00ffff;}
+    .tnc_white {color: #ffffff;}
+}
 
 .tnc_bg_black {background-color: #000000;}
 .tnc_bg_red {background-color: maroon;}
