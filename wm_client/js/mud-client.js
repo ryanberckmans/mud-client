@@ -1,4 +1,9 @@
 
+var parser = null;
+$.get("grammar.txt", function(grammar) {
+  parser = PEG.buildParser(grammar);
+});
+      
 var mud_client = {
   
   process_cmd: function(cmd) {

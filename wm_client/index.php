@@ -32,6 +32,8 @@
 	<script type="text/javascript" src="js/web_socket.js"></script>
 		
 	<script type="text/javascript" src="js/client.js"></script>	
+  <script type="text/javascript" src="js/parser/lib/compiler.js"></script>	
+  <script type="text/javascript" src="js/parser/lib/metagrammar.js"></script>	
 	<script type="text/javascript" src="js/mud-client.js"></script>	
 	<script type="text/javascript" src="js/atcp.js"></script>	
 	

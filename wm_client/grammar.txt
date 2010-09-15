@@ -1,0 +1,12 @@
+
+start
+  = text:[^;] { return text; }
+
+/*
+start 
+  = text:[^;] { return text; }
+  / start &semicolon start
+
+semicolon = ";"
+';
+*/
