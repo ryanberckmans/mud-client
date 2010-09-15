@@ -54,26 +54,26 @@
 	
 	// Telnet color code replacements //
 	$TELNET_COLORS = array(
-		"[0m" => "</b></span>", 				// Reset
-		"[00m" => "</b></span>", 				// Reset
-		"[1m" => "<b>", 						// Bold (bright) on 
+                         //"[0m" => "</b></span>", 				// Reset
+		//"[00m" => "</b></span>", 				// Reset
+		//"[1m" => "<b>", 						// Bold (bright) on 
 		"[3m" => "",							// Italics on
 		"[4m" => "", 							// Underline on
-		"[7m" => "<span class='tnc_inverse'>",	// Reverse video
+		"[7m" => "",	// Reverse video
 		"[9m" => "",							// Strikethrough on
-		"[22m" => "</b>",						// Bold off
+		//"[22m" => "</b>",						// Bold off
 		"[23m" => "",							// Italics off
 		"[24m" => "",							// Underline off
 		"[29m" => "",							// Strikethrough off
-		"[30m" => "<span class='tnc_black'>",
-		"[31m" => "<span class='tnc_red'>",
-		"[32m" => "<span class='tnc_green'>",
-		"[33m" => "<span class='tnc_yellow'>",
-		"[34m" => "<span class='tnc_blue'>",
-		"[35m" => "<span class='tnc_magenta'>",
-		"[36m" => "<span class='tnc_cyan'>",
-		"[37m" => "<span class='tnc_white'>",
-		"[39m" => "<span class='tnc_default'>",
+		//"[30m" => "<span class='tnc_black'>",
+		//"[31m" => "<span class='tnc_red'>",
+		//"[32m" => "<span class='tnc_green'>",
+		//"[33m" => "<span class='tnc_yellow'>",
+		//"[34m" => "<span class='tnc_blue'>",
+		//"[35m" => "<span class='tnc_magenta'>",
+		//"[36m" => "<span class='tnc_cyan'>",
+		//"[37m" => "<span class='tnc_white'>",
+		//"[39m" => "<span class='tnc_default'>",
 		"[40m" => "<span class='tnc_bg_black'>",
 		"[41m" => "<span class='tnc_bg_red'>",
 		"[42m" => "<span class='tnc_bg_green'>",

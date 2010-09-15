@@ -5,6 +5,8 @@
 
 .tnc_inverse {color: black; background: white;}
 
+.echo {color: #ccc; }
+
 .tnc_black {color: #000000;}
 .tnc_red {color: #cd0000;}
 .tnc_green {color: #00cd00;}
@@ -14,16 +16,23 @@
 .tnc_cyan {color: #00cdcd;}
 .tnc_white {color: #e5e5e5;}
 
-b {
-    .tnc_black {color: #7f7f7f;}
-    .tnc_red {color: #ff0000;}
-    .tnc_green {color: #00ff00;}
-    .tnc_yellow {color: #ffff00;}
-    .tnc_blue {color: #5c5cff;}
-    .tnc_magenta {color: #ff00ff;}
-    .tnc_cyan {color: #00ffff;}
-    .tnc_white {color: #ffffff;}
-}
+.tnc_black_b {color: #7f7f7f; font-weight:bold; }
+.tnc_red_b {color: #ff0000; font-weight:bold; }
+.tnc_green_b {color: #00ff00; font-weight:bold; }
+.tnc_yellow_b {color: #ffff00; font-weight:bold; }
+.tnc_blue_b {color: #5c5cff; font-weight:bold; }
+.tnc_magenta_b {color: #ff00ff; font-weight:bold; }
+.tnc_cyan_b {color: #00ffff; font-weight:bold; }
+.tnc_white_b {color: #ffffff; font-weight:bold; }
+
+b .tnc_black {color: #7f7f7f;}
+b .tnc_red {color: #ff0000;}
+b .tnc_green {color: #00ff00;}
+b .tnc_yellow {color: #ffff00;}
+b .tnc_blue {color: #5c5cff;}
+b .tnc_magenta {color: #ff00ff;}
+b .tnc_cyan {color: #00ffff;}
+b .tnc_white {color: #ffffff;}
 
 .tnc_bg_black {background-color: #000000;}
 .tnc_bg_red {background-color: maroon;}

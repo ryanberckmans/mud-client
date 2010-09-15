@@ -203,12 +203,11 @@ function set_disconnected()
 }
 
 function print(s) {
-	    
     var color = "#ccc";
     if (typeof(arguments[1]) != undefined)
         color = arguments[1];
     
-    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span><br>");
+    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
 }
 
 function handle_read(s)
@@ -226,7 +225,7 @@ function handle_read(s)
 
   // Output a standard message //
 	if (data.message) {
-    ow_Write(data.message);
+    ow_Write(mud_client.output_parser.parse(data.message));
   }
 	
 	// Write a WebMud server status message //

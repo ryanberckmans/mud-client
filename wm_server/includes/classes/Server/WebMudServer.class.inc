@@ -213,6 +213,7 @@ class WebMudServer extends SocketServer
 			
 			// Kick it to the client //
       $json = json_encode(array("message" => $data));
+      echo $json;
 			$cObj->send($json);
 		}		
 	}
