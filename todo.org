@@ -1,3 +1,43 @@
 
 * bugs
 ** TODO if you go into command history, and change the command before resubmitting it, the changed copy is cached back in the cmd history (cuz it restores whatever is on the line)
+ 
+
+* grammar
+** terminals:
+text
+;
+/alias
+{
+}
+** non-terminals:
+CMD = /alias { text } { CMD }
+CMD = CMD ; CMD
+CMD = text
+
+* help files
+** alias
+Format: /alias shortcut commands group name
+
+An alias lets you define some "shortcut" text to execute a command or commands.
+Your alias list is checked each time you press enter to send some text to the
+mud. If the text you typed is found in your alias list the text from the
+commands side of the alias is sent instead.  An alias is only replaced if it is
+the first text typed on a line.
+
+   þ alias name This is the shortcut text you want to be able to type to
+     execute commands.
+   þ commands The commands to execute when the alias name is typed.
+   þ group name This is an optional parameter. See the user guide on groups
+     for help.
+
+Examples:
+
+/alias eat take food bag;gobble food
+If you typed "eat" on the input line the commands "take food bag" and "gobble
+food" would be sent to the mud instead.
+
+/alias targ %0 /var Target $0
+You can also use the variable %0 to represent the text typed after the alias
+shortcut. In this case the alias is used to quickly set a targeting variable.
+Typing "targ Vecna" would set a variable called "Target" to "Vecna"
