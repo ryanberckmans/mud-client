@@ -255,7 +255,7 @@ function ow_Write(text)
 {	
 	var objDiv = window.top.document.getElementById("output");
 
-  if( $("#output").children().length > 50 ) {
+  if( $("#output").children().length > 35 ) {
     $("#output").children().slice(0,5).remove();
   }
 		
