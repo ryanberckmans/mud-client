@@ -102,7 +102,7 @@
             <div id="c_footer">
             	<form autocomplete="off" id="data_form" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
             		<input id="user_input" type="text" value="">            		
-            	</input>
+            	</form>
             </div>
 		</div>
 	</div>
