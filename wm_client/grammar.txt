@@ -1,12 +1,15 @@
 
 start
-  = text:[^;] { return text; }
+  = cmd:cmd ";" start:start { return cmd.concat(start); }
+  / cmd
 
-/*
-start 
-  = text:[^;] { return text; }
-  / start &semicolon start
+cmd
+  = "/" i:integer text:text { var cmds = []; for(;i>0;i--) cmds.push(text); return cmds; }
+  / text:text { return [text]; }
 
-semicolon = ";"
-';
-*/
+integer
+  = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+
+text 
+  = s:[^;]* { return s.join(""); }
+

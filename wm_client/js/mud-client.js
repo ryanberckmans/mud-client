@@ -1,14 +1,12 @@
 
+var grammar = null
 var parser = null;
-$.get("grammar.txt", function(grammar) {
+$.get("grammar.txt", function(g) {
+  grammar = g;
   parser = PEG.buildParser(grammar);
 });
       
 var mud_client = {
-  
-  process_cmd: function(cmd) {
-    return cmd;
-  },
   
   send: function(cmd) {
     print(cmd, "#999"); // echo
@@ -29,11 +27,18 @@ var mud_client = {
     
     if (input.length > 0) {
       cmd_history_up.push(input); // save the current command unless its a simple return
-    } 
+    }
     
-    var cmds = input.split(";");
+    var cmds = null;
+    try {
+      cmds = parser.parse(input);
+    } catch (e) {
+      alert("error parsing:" + input );
+      cmds = [];
+    }
+
     for ( var i=0; i < cmds.length ; i++ ) {
-      cmds[i] = this.process_cmd( cmds[i] ) + "\n";
+      cmds[i] += "\n";
     }
     this.send(cmds.join(""));
 	  
