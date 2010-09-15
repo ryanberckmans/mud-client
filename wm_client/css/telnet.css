@@ -14,6 +14,9 @@
 .tnc_cyan {color: cyan;}
 .tnc_white {color: white;}
 
+b .tnc_green {color: #00FF00; }
+b .tnc_blue {color: #5C5CFF; }
+
 .tnc_bg_black {background-color: #000000;}
 .tnc_bg_red {background-color: maroon;}
 .tnc_bg_green {background-color: green;}
