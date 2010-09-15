@@ -1,0 +1,3 @@
+
+* bugs
+** TODO if you go into command history, and change the command before resubmitting it, the changed copy is cached back in the cmd history (cuz it restores whatever is on the line)

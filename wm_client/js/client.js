@@ -126,50 +126,17 @@ $(document).ready(function(){
     }
 });	
 
-var MUD = "medievia.com 4000"
+var MUD = "medievia.com 4000";
 function mud_login() {
-  if ( sendDirect("PHUD:CONNECT " + MUD)) {
-     postLogin();
-  }
+  send_to_mud("PHUD:CONNECT " + MUD);
+  postLogin();
 }
 
-function sendDirect(data) 
-{
-  if (data != "")
-	{	
-   			socket.send(data);
-		return true;
-	} else {
-		return false;
-	}	
+function send_to_mud(msg) {
+  socket.send(msg);
 }
 
-function send() 
-{
-	s = document.getElementById("user_input").value;
-
-	print(s, "#999");
-
-  if (down_arrow_cmds.length > 0 ) {
-    up_arrow_cmds.push(s); // resave the old copy of a historical cmd we're browsing
-  }
-  while ( down_arrow_cmds.length > 1 ) {
-    up_arrow_cmds.push( down_arrow_cmds.pop()); // save all the commands we scrolled through already
-  }
-  down_arrow_cmds.pop(); // never save the last cmd in down_arrow, because it is the transient coomand the user half-typed in. 
-
-  if (s.length > 0) {
-     up_arrow_cmds.push(s); // save the current command unless its a simple return
-  } 
-	
-	socket.send(s);
-	
-	document.getElementById("user_input").value = "";
-	return true;	
-}
-
-function postLogin() 
-{
+function postLogin() {
   keyboard_handlers();
 	document.getElementById("user_input").value = "";
 	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});
@@ -178,22 +145,22 @@ function postLogin()
 }
 
 function user_input_down_arrow(evt) {
-  if ( down_arrow_cmds.length > 0 ) {
-    up_arrow_cmds.push( document.getElementById("user_input").value );
-    document.getElementById("user_input").value = down_arrow_cmds.pop();
+  if ( cmd_history_down.length > 0 ) {
+    cmd_history_up.push( document.getElementById("user_input").value );
+    document.getElementById("user_input").value = cmd_history_down.pop();
   } else {
     document.getElementById("user_input").value = "";
   }
 }
 
-var down_arrow_cmds = [];
-var up_arrow_cmds = [];
+var cmd_history_down = [];
+var cmd_history_up = [];
 
 function user_input_up_arrow(evt) {
   // command scrollback
-  if ( up_arrow_cmds.length > 0 ) {
-    down_arrow_cmds.push(document.getElementById("user_input").value);
-    document.getElementById("user_input").value = up_arrow_cmds.pop();
+  if ( cmd_history_up.length > 0 ) {
+    cmd_history_down.push(document.getElementById("user_input").value);
+    document.getElementById("user_input").value = cmd_history_up.pop();
   }
 }
 
