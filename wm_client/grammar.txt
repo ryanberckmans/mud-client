@@ -4,7 +4,7 @@ start
   / cmd
 
 cmd
-  = "/" i:integer text:text { var cmds = []; for(;i>0;i--) cmds.push(text); return cmds; }
+  = "/" i:integer text:text { var cmds = []; for(;i>0;i--) cmds.push(text.trimLeft()); return cmds; }
   / text:text { return [text]; }
 
 integer

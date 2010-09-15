@@ -255,8 +255,8 @@ function ow_Write(text)
 {	
 	var objDiv = window.top.document.getElementById("output");
 
-  if( $("#output").children().length > 35 ) {
-    $("#output").children().slice(0,5).remove();
+  if( $("#output").children().length > 70 ) {
+    $("#output").children().slice(0,10).remove();
   }
 		
 	objDiv.innerHTML += text;
