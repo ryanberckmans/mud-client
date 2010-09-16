@@ -13,7 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<script>document.domain = document.domain</script>
-	<title>PHudBase-WebMud Client</title>
+	<title>mud client</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>	
 	
 	<link type="text/css" media="screen" rel="stylesheet" href="css/colorbox.css"/>
@@ -60,7 +60,7 @@
 		</div>           
 		<div id="c_wrap"> 
             <div id="c_output">            	
-            	<div id="output" class="tnc_white">
+            	<div id="output" class="tnc_default">
             	</div>
             </div>
             <div id="c_right">
