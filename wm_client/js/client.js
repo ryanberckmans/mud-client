@@ -142,6 +142,7 @@ function postLogin() {
 	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});
   $("#c_right").hide();
   $("#c_output").css("margin-right", "auto");
+  $(window).focus( function(e) { $("#user_input").focus(); } );
 }
 
 function user_input_down_arrow(evt) {

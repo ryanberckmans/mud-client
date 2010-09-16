@@ -3,6 +3,7 @@
 ** TODO if you go into command history, and change the command before resubmitting it, the changed copy is cached back in the cmd history (cuz it restores whatever is on the line)
 ** TODO the character representing a road which enters at the bottom of the tile and exits to the right doesnt display, and it messes up the map
 
+
 * help files
 ** alias
 Format: /alias shortcut commands group name
