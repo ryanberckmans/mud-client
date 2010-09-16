@@ -48,29 +48,15 @@ var mud_client = {
   
   color_on: function(color) {
     var s = "";
-    
     if ( this.color == color && this.color_is_bold == this.bold) {
       return s;
     }
-    
     if ( this.color ) {
       s += "</span>";
     }
-
     this.color_is_bold = this.bold
     this.color = color;
     s += this.color_span();
-    return s;
-  },
-  
-  color_off: function() {
-    var s = "";
-    if ( this.color ) {
-      s += "</span>";
-      this.bg_color = "black_bg";
-      this.fg_color = "white";
-      this.color = this.fg_color + "_" + this.bg_color;
-    }
     return s;
   },
   
@@ -97,7 +83,14 @@ var mud_client = {
   reset: function() {
     var s = "";
     this.bold = false;
-    s += this.color_off();
+    this.color_is_bold = false;
+    if ( this.color ) {
+      s += "</span>";
+      this.bg_color = "black_bg";
+      this.fg_color = "white";
+      this.color = this.fg_color + "_" + this.bg_color;
+    }
+    s += this.color_span(); // all text is wrapped in <span>, so use span for reset colors
     return s;
   },
   

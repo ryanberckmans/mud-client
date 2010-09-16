@@ -256,7 +256,7 @@ function ow_Write(text)
 	var objDiv = window.top.document.getElementById("output");
 
   var lines = $("#output").find("br").length;
-  while( lines > 50 ) {
+  while( lines > 100 ) {
     var head = $("#output").children().slice(0,5);
     var lines_in_head = $(head).find("br").length + $(head).filter("br").length;
     $(head).remove();
