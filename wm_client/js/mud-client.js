@@ -32,7 +32,11 @@ var mud_client = {
 
     this.color_is_bold = this.bold
     this.color = color;
-    s += "<span class='tnc_" + color + "'>";
+    s += "<span class='tnc_" + color;
+    if ( this.bold ) {
+      s += "_b"; 
+    }
+    s +="'>";
     
     return s;
   },

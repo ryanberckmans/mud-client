@@ -60,7 +60,7 @@
 		</div>           
 		<div id="c_wrap"> 
             <div id="c_output">            	
-            	<div id="output">            		
+            	<div id="output" class="tnc_white">
             	</div>
             </div>
             <div id="c_right">
