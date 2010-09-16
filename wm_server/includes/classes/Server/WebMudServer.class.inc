@@ -37,7 +37,7 @@ class WebMudServer extends SocketServer
 						if (is_resource($mc)) {		
               $input = "";
               
-              if (@socket_recv($mc,$input,16384,MSG_DONTWAIT) === 0) {	
+              if (@socket_recv($mc,$input,32768,MSG_DONTWAIT) === 0) {	
                 // We lost the connection //
                 $this->on_wm_disconnect($client->getID());
 							} 
@@ -47,8 +47,29 @@ class WebMudServer extends SocketServer
               } 
 
               if ( strlen($client->getBuffer()) > 0 ) {
-                $this->on_wm_receive($client->getID(), $client->getBuffer());
+                $buffer = $client->getBuffer();
                 $client->clearBuffer();
+
+                # check for unterminated ansi codes
+                $last_esc = strrpos($buffer, chr(27));
+                if ( $last_esc != FALSE ) {
+                  $end = substr($buffer, $last_esc - strlen($buffer));
+                  echo "\nlastesc:";
+                  echo $last_esc;
+                  echo "\nstrlen:";
+                  echo strlen($buffer);
+                  echo "\nend:";
+                  echo $end;
+                  echo "endofend\n";
+                  $re = '/\e$|\e\[$|\e\[\d$|\e\[\d\d$/';
+                  if ( preg_match($re, $end) ) {
+                    echo "\nfound unterminated code\n";
+                    $buffer = substr($buffer,0,$last_esc);
+                    $client->setBuffer($end); # found an unterminated code, replace $end in client buffer, so code will be completed when next input comes
+                  }
+                }
+
+                $this->on_wm_receive($client->getID(), $buffer);
               }
 
 						} // end is_resource

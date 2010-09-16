@@ -16,10 +16,20 @@ var mud_client = {
 
   output_grammar: null,
   output_parser: null,
-  
+
+  fg_color: "white",
+  bg_color: "black_bg",
   color: null,
   color_is_bold: false,
   bold: false,
+  
+  fg_color_on: function(color) {
+    return this.color_on( color + "_" + this.bg_color + "_bg");
+  },
+  
+  bg_color_on: function(color) {
+    return this.color_on( this.fg_color + "_" + color );
+  },
   
   color_on: function(color) {
     var s = "";
@@ -44,8 +54,10 @@ var mud_client = {
   color_off: function() {
     var s = "";
     if ( this.color ) {
-      s = "</span>";
+      s += "</span>";
       this.color = null;
+      this.bg_color = "black";
+      this.fg_color = "white";
     }
     return s;
   },

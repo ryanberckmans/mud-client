@@ -74,15 +74,15 @@
 		//"[36m" => "<span class='tnc_cyan'>",
 		//"[37m" => "<span class='tnc_white'>",
 		//"[39m" => "<span class='tnc_default'>",
-		"[40m" => "<span class='tnc_bg_black'>",
-		"[41m" => "<span class='tnc_bg_red'>",
-		"[42m" => "<span class='tnc_bg_green'>",
-		"[43m" => "<span class='tnc_bg_yellow'>",
-		"[44m" => "<span class='tnc_bg_blue'>",
-		"[45m" => "<span class='tnc_bg_magenta'>",
-		"[46m" => "<span class='tnc_bg_cyan'>",
-		"[47m" => "<span class='tnc_bg_white'>",
-		"[49m" => "<span class='tnc_bg_default'>"
+		//"[40m" => "<span class='tnc_bg_black'>",
+		//"[41m" => "<span class='tnc_bg_red'>",
+		//"[42m" => "<span class='tnc_bg_green'>",
+		//"[43m" => "<span class='tnc_bg_yellow'>",
+		//"[44m" => "<span class='tnc_bg_blue'>",
+		//"[45m" => "<span class='tnc_bg_magenta'>",
+		//"[46m" => "<span class='tnc_bg_cyan'>",
+		//"[47m" => "<span class='tnc_bg_white'>",
+		//"[49m" => "<span class='tnc_bg_default'>"
 	);
 	
 	// Directory on the filesystem to store logs generated (needs write (755) permissions) //
