@@ -19,15 +19,30 @@ var mud_client = {
 
   fg_color: "white",
   bg_color: "black_bg",
-  color: null,
+  color: "white_black_bg",
   color_is_bold: false,
   bold: false,
   
+  color_span: function() {
+    var s = "";
+    if ( this.color ) {
+      s += "<span class='tnc_" + this.color;
+      if ( this.bold ) {
+        s += "_b"; 
+      }
+      s +="'>";
+    }
+    
+    return s;
+  },
+  
   fg_color_on: function(color) {
-    return this.color_on( color + "_" + this.bg_color + "_bg");
+    this.fg_color = color;
+    return this.color_on( color + "_" + this.bg_color);
   },
   
   bg_color_on: function(color) {
+    this.bg_color = color;
     return this.color_on( this.fg_color + "_" + color );
   },
   
@@ -38,16 +53,13 @@ var mud_client = {
       return s;
     }
     
-    s += this.color_off();
+    if ( this.color ) {
+      s += "</span>";
+    }
 
     this.color_is_bold = this.bold
     this.color = color;
-    s += "<span class='tnc_" + color;
-    if ( this.bold ) {
-      s += "_b"; 
-    }
-    s +="'>";
-    
+    s += this.color_span();
     return s;
   },
   
@@ -55,9 +67,9 @@ var mud_client = {
     var s = "";
     if ( this.color ) {
       s += "</span>";
-      this.color = null;
-      this.bg_color = "black";
+      this.bg_color = "black_bg";
       this.fg_color = "white";
+      this.color = this.fg_color + "_" + this.bg_color;
     }
     return s;
   },

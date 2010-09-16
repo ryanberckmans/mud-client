@@ -225,7 +225,8 @@ function handle_read(s)
 
   // Output a standard message //
 	if (data.message) {
-    ow_Write(mud_client.output_parser.parse(data.message));
+    ow_Write(mud_client.color_span() + // re-open <span> for current color, because html we append won't be inserted into the most recent span
+             mud_client.output_parser.parse(data.message));
   }
 	
 	// Write a WebMud server status message //
@@ -254,8 +255,12 @@ function ow_Write(text)
 {	
 	var objDiv = window.top.document.getElementById("output");
 
-  if( $("#output").children().length > 250 ) {
-    $("#output").children().slice(0,20).remove();
+  var lines = $("#output").find("br").length;
+  while( lines > 50 ) {
+    var head = $("#output").children().slice(0,5);
+    var lines_in_head = $(head).find("br").length + $(head).filter("br").length;
+    $(head).remove();
+    lines -= lines_in_head;
   }
 		
 	objDiv.innerHTML += text;
