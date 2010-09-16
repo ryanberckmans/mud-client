@@ -4,6 +4,9 @@
 ** TODO the character representing a road which enters at the bottom of the tile and exits to the right doesnt display, and it messes up the map
 
 
+* alias planning
+** /alias { text } { cmd }   ->  new_alias
+
 * help files
 ** alias
 Format: /alias shortcut commands group name
