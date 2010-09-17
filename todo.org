@@ -1,4 +1,8 @@
 
+* other clients
+http://primordiax.com/play/client.html
+http://www.avenshar.com/client/client.html?t=1284693878389
+http://maidendesmodus.com/play/
 * bugs
 ** TODO if you go into command history, and change the command before resubmitting it, the changed copy is cached back in the cmd history (cuz it restores whatever is on the line)
 ** TODO the character representing a road which enters at the bottom of the tile and exits to the right doesnt display, and it messes up the map
