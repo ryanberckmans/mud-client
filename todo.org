@@ -8,6 +8,33 @@ http://maidendesmodus.com/play/
 ** TODO the character representing a road which enters at the bottom of the tile and exits to the right doesnt display, and it messes up the map
 
 
+* script planning
+
+** high level:
+*** scripts are javascript
+*** users /read scripts in using ajax requests
+*** no /write
+*** no creating any scripts in client at all??  no /alias, /macro
+*** client exposes a javascript API for scripts /read from ajax
+**** e.g. with mud_client.api, alias( text, cmd), etc.
+*** errors in /read script would be displayed in terminal
+*** what if they want stuff on the fly?? this is a significant use case
+**** option: allow raw javascript input on command line
+***** e.g. /script alias("sv","c shockw")
+**** option: pop-up a mini javascript editor. dont really want to encourage popups ever.
+*** what if they want to persist script elements they have typed in command line?
+**** option: store /script commands into a temp buffer
+
+
+** initiates script activity:
+*** running of alias
+*** running of macro
+*** firing of trigger
+
+** commands
+
+
+
 * alias planning
 ** /alias { text } { cmd }   ->  new_alias
 
