@@ -95,7 +95,7 @@ var mud_client = {
   },
   
   send: function(cmd) {
-    print(cmd, "#999"); // echo
+    print(cmd); // echo
     send_to_mud(cmd);
   },
   
@@ -124,11 +124,84 @@ var mud_client = {
     }
 
     for ( var i=0; i < cmds.length ; i++ ) {
-      cmds[i] += "\n";
+      if ( cmds[i] == null ) {
+        cmds.splice(i,1);
+        i--; // decrement i to account for element removal
+      } else {
+        cmds[i] += "\n";
+      }
     }
-    this.send(cmds.join(""));
+    if ( cmds.length > 0 ) {
+      this.send(cmds.join(""));
+    }
 	  
 	  document.getElementById("user_input").value = "";
     return true;
   },
+  
+  chat: {
+    connections: {},
+    chat_name: "NotYetSet",
+    
+    call: function(host, port) {
+      try {
+      if( this.connections[host] ) {
+        print ("chat connection to " + host + " already exists\n");
+        return;
+      }
+      
+      print("initiating chat connection to " + host + ":" + port + "\n");
+      
+      var socket = null;
+      try {
+        socket = new WebSocket("ws://" + host + ":" + port);
+        this.connections[host] = { socket: socket };
+      } catch (e) {
+        print ("error opening chat socket to " + host + " " + port);
+      }
+      
+	    socket.onopen = function() {
+        mud_client.chat.handshake(host);
+      }
+	    
+	    socket.onmessage = function(evt) {				
+			  mud_client.chat.message(host, evt.data);
+	    }
+      
+      socket.onclose = function(evt) {
+        mud_client.chat.disconnect(host);
+      }      
+      
+      socket.onerror = function() {
+        mud_client.chat.disconnect(host);
+      }
+      } catch(e) {
+        print ("/call error: " + e);
+      }
+    },
+    
+    handshake: function(host) {
+      if ( ! this.connections[host] ) {
+        return;
+      } 
+      this.connections[host].connected = true;
+      print("chat connected to " + host + " established\n");
+    },
+    
+    message: function(host, msg) {
+      print(host + " chats: " + msg);
+    },
+    
+    disconnect: function(host) {
+      if ( ! this.connections[host] ) {
+        return;
+      } 
+      if ( ! this.connections[host].connected ) {
+        print("chat connection to " + host + " failed\n");
+      } else {
+        print("chat connection to " + host + " lost\n");
+      }
+      this.connections[host] = null;
+    },
+  }, // end mud_client.call
 };

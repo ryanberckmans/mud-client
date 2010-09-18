@@ -205,9 +205,6 @@ function set_disconnected()
 
 function print(s) {
     var color = "#ccc";
-    if (typeof(arguments[1]) != undefined)
-        color = arguments[1];
-    
     ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
 }
 
