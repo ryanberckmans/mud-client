@@ -161,31 +161,48 @@ var mud_client = {
       }
       
 	    socket.onopen = function() {
-        mud_client.chat.handshake(host);
+        print("socket opened");
+        mud_client.chat.connected(host);
       }
 	    
 	    socket.onmessage = function(evt) {				
-			  mud_client.chat.message(host, evt.data);
+			  mud_client.chat.handshake(host,evt.data);
 	    }
       
       socket.onclose = function(evt) {
+        print("no error just close" + evt);
         mud_client.chat.disconnect(host);
       }      
       
-      socket.onerror = function() {
+      socket.onerror = function(evt) {
+        print("some kind of socket error" + evt.data);
         mud_client.chat.disconnect(host);
       }
+        
       } catch(e) {
         print ("/call error: " + e);
       }
     },
     
-    handshake: function(host) {
+    handshake: function(host,msg) {
+      print("msg" + msg);
+      if ( ! this.connections[host] ) {
+        return;
+      }
+      if ( msg.match('/NO/') ) {
+        print("chat connection to " + host + " denied by them\n");
+      } else {
+        print("handshake yes msg" + msg);
+      }
+    },
+    
+    connected: function(host) {
       if ( ! this.connections[host] ) {
         return;
       } 
       this.connections[host].connected = true;
       print("chat connected to " + host + " established\n");
+      socket.send("CHAT:"+this.chat_name+"\n000.000.000.000999  ");
     },
     
     message: function(host, msg) {
@@ -196,6 +213,7 @@ var mud_client = {
       if ( ! this.connections[host] ) {
         return;
       } 
+      print (this.connections[host].socket.readyState ) ;
       if ( ! this.connections[host].connected ) {
         print("chat connection to " + host + " failed\n");
       } else {
