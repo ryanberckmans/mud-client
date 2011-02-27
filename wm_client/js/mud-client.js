@@ -154,7 +154,7 @@ var mud_client = {
       
       var socket = null;
       try {
-        socket = new WebSocket("ws://" + host + ":" + port);
+        socket = new WebSocket("ws://127.0.0.1:4050/" + host + "/" + port);
         this.connections[host] = { socket: socket };
       } catch (e) {
         print ("error opening chat socket to " + host + " " + port);
@@ -165,17 +165,15 @@ var mud_client = {
         mud_client.chat.connected(host);
       }
 	    
-	    socket.onmessage = function(evt) {				
+	    socket.onmessage = function(evt) {
 			  mud_client.chat.handshake(host,evt.data);
 	    }
       
       socket.onclose = function(evt) {
-        print("no error just close" + evt);
         mud_client.chat.disconnect(host);
       }      
       
       socket.onerror = function(evt) {
-        print("some kind of socket error" + evt.data);
         mud_client.chat.disconnect(host);
       }
         
@@ -185,7 +183,6 @@ var mud_client = {
     },
     
     handshake: function(host,msg) {
-      print("msg" + msg);
       if ( ! this.connections[host] ) {
         return;
       }
@@ -201,8 +198,8 @@ var mud_client = {
         return;
       } 
       this.connections[host].connected = true;
-      print("chat connected to " + host + " established\n");
-      socket.send("CHAT:"+this.chat_name+"\n000.000.000.000999  ");
+      print("chat connection to " + host + " established\n");
+      this.connections[host].socket.send("CHAT:"+this.chat_name+"\n000.000.000.000999  ");
     },
     
     message: function(host, msg) {
