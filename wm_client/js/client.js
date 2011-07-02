@@ -10,15 +10,8 @@ var socket;
 var conn_div;
 var m_conn_div;
 
-var num_msgs;
 var next_del;
 
-// Limit for messages displayed in the output window (will trim from the beginning past limit) //
-// 	- Should be kept reasonably small (< 100-ish) to prevent 
-//	  the browser from clogging on all of the data 
-var msg_limit = 50;
-
-var mode;
 var stopped;
 var logging = false;
 var output_mouse_over = false;
@@ -66,65 +59,32 @@ $(document).ready(function(){
 	nl_pct = document.getElementById("nl_pct");
 	nl_raw = document.getElementById("nl_raw");
 	
-	num_msgs = 0;	
 	next_del = 0;	
 	
-	scrollback = function() {		
-		var objDiv = window.top.document.getElementById("output");
-		
-		if (objDiv.scrollTop < objDiv.scrollHeight && output_mouse_over)
-		{	
-			$("#output").css("border-color", "red");			
-			$("#autoscroll").show();
-			prevent_autoscroll = true;
-		} else {
-			prevent_autoscroll = false;			
-		}
-	}
-	
-	$("#output").dblclick(scrollback);
-	
-	$("#output").hover(
-		function() {
-			output_mouse_over = true;			
-		},
-		function() {
-			output_mouse_over = false;
-			prevent_autoscroll = false;
-			$("#output").css("border-color", "#464646");
-					
-			var objDiv = window.top.document.getElementById("output");					
-			objDiv.scrollTop = objDiv.scrollHeight;
-			$("#autoscroll").hide();
-		}		
-	);
-	
-	 // Set URL of your WebSocketMain.swf here:
-    WebSocket.__swfLocation = "WebSocketMain.swf";
-    // Set this to dump debug message from Flash to console.log:
-    WebSocket.__debug = true;	    
-	
-	mode = "websocket";
+  // Set this to dump debug message from Flash to console.log:
+  WebSocket.__debug = true;
 	
 	socket = new WebSocket(wshost);	
 	
 	socket.onopen = function() {
-    	set_connected_phudbase();
-      mud_login();
-    }
+    set_connected_phudbase();
+    mud_login();
+  }
 	
 	socket.onmessage = function(evt) {				
-			handle_read(evt.data);
+		handle_read(evt.data);
 	}
-    
-    socket.onclose = function(evt) {
-    	set_disconnected();
-    }      
-    
-    socket.onerror = function() {
-       ow_Write("<p>WebSocket error:</p>");
-    }
-});	
+  
+  socket.onclose = function(evt) {
+    set_disconnected();
+  }      
+  
+  socket.onerror = function() {
+    ow_Write("<p>WebSocket error:</p>");
+  }
+
+  output_div = window.top.document.getElementById("output");
+});
 
 var MUD = "localhost 4000";
 function mud_login() {
@@ -198,25 +158,30 @@ function set_disconnected_mud()
 function set_disconnected()
 {
 	conn_div.style.background = "red";
-    conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
-    m_conn_div.style.background = "red";
+  conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
+  m_conn_div.style.background = "red";
 	m_conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
 }
 
 function print(s) {
-    var color = "#ccc";
-    ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
+  var color = "#ccc";
+  ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
+}
+
+var utf8_to_html = [];
+for( i = 128; i < 256 ; i++ ) {
+  var hex = i.toString(16);
+  var utf8 = new RegExp("\\\\u00" + hex, "gi");
+  var html = "&#" + i.toString() + ";";
+  utf8_to_html[i] = []
+  utf8_to_html[i][0] = utf8;
+  utf8_to_html[i][0] = html;
 }
 
 function handle_read(s)
 {
-	console.log(s);
-
   for( i = 128; i < 256 ; i++ ) {
-      var hex = i.toString(16);
-      var utf8 = new RegExp("\\\\u00" + hex, "gi");
-      var html = "&#" + i.toString() + ";";
-      s = s.replace( utf8, html );
+    s = s.replace( utf8_to_html[i][0], utf8_to_html[i][1] );
   }
 
 	data = eval("(" + s + ")");
@@ -244,15 +209,15 @@ function handle_read(s)
 	{
 		if (data.fconn_status == "connected")		
 			set_connected_phudbase();
-		 else if (data.fconn_status == "disconnected")
+		else if (data.fconn_status == "disconnected")
 			set_disconnected();		
 	}
 }
 
+
 function ow_Write(text)
 {	
-	var objDiv = window.top.document.getElementById("output");
-
+  /*
   var lines = $("#output").find("br").length;
   while( lines > 120 ) {
     var head = $("#output").children().slice(0,5);
@@ -260,28 +225,7 @@ function ow_Write(text)
     $(head).remove();
     lines -= lines_in_head;
   }
-		
-	objDiv.innerHTML += text;
-	
-	trim_ow();
-	
-	num_msgs++;
-	
-	if (prevent_autoscroll == true) return;
-	
-	objDiv.scrollTop = objDiv.scrollHeight;
-}
-
-function trim_ow()
-{
-	var elem;	
-	
-	if (num_msgs >= msg_limit)
-	{		
-		elem = "#msg" + next_del;
-			
-		$(elem).remove();
-		
-		next_del++;
-	}
+	*/ 
+	output_div.innerHTML += text;
+	output_div.scrollTop = output_div.scrollHeight;
 }
