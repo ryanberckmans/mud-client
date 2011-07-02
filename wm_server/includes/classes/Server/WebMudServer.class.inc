@@ -201,7 +201,7 @@ class WebMudServer extends SocketServer
 			
 			if (is_resource($conn))
 			{
-				socket_write($conn, $data . "\r\n", strlen($data . "\r\n"));	
+				socket_write($conn, $data, strlen($data));
 			}
 		}
 	}

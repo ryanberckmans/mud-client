@@ -126,7 +126,7 @@ $(document).ready(function(){
     }
 });	
 
-var MUD = "medievia.com 4000";
+var MUD = "localhost 4000";
 function mud_login() {
   send_to_mud("PHUD:CONNECT " + MUD);
   postLogin();
