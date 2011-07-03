@@ -23,7 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="css/styles.css"/>	
 	<link rel="stylesheet" type="text/css" href="css/telnet.css"/>
 			
-	<script type="text/javascript" src="js/jquery.pack.js"></script>
+	<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
 	<script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript" src="js/jquery.tools.min.js"></script>
 		

@@ -217,7 +217,6 @@ function handle_read(s)
 
 function ow_Write(text)
 {	
-  /*
   var lines = $("#output").find("br").length;
   while( lines > 120 ) {
     var head = $("#output").children().slice(0,5);
@@ -225,7 +224,6 @@ function ow_Write(text)
     $(head).remove();
     lines -= lines_in_head;
   }
-	*/ 
 	output_div.innerHTML += text;
 	output_div.scrollTop = output_div.scrollHeight;
 }
