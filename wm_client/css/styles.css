@@ -76,7 +76,7 @@ td {vertical-align: top;}
 
 @font-face {
 	font-family: medievia;
-	src: url(http://127.0.0.1/client/medievia.ttf) format("truetype");
+	src: url(medievia.ttf) format("truetype");
 }
 
 div#output br {margin-top: 20px; margin-bottom: 20px; }
