@@ -128,6 +128,9 @@ var mud_client = {
         cmds.splice(i,1);
         i--; // decrement i to account for element removal
       } else {
+        if (cmds[i] == "") {
+          cmds[i] = "_hack_newline";
+        }
         cmds[i] += "\n";
       }
     }
