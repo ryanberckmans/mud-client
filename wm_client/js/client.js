@@ -61,6 +61,14 @@ $(document).ready(function(){
 	
 	next_del = 0;	
 	
+  // Set URL of your WebSocketMain.swf here:
+  WebSocket.__swfLocation = "WebSocketMain.swf";
+
+  // Set this to dump debug message from Flash to console.log:
+  WebSocket.__debug = true;
+
+  mode = "websocket";
+
   // Set this to dump debug message from Flash to console.log:
   WebSocket.__debug = true;
 	
