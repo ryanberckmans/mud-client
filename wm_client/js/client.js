@@ -165,7 +165,7 @@ function set_disconnected()
 
 function print(s) {
   var color = "#ccc";
-  ow_Write("<br><span style='color:"+color+ "'>" + s + "</span>");
+  ow_Write("<span style='color:"+color+ "'>" + s + "</span>");
 }
 
 var utf8_to_html = [];
