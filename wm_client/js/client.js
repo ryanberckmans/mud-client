@@ -24,7 +24,7 @@ var m_nw, m_n, m_ne, m_e, m_se, m_s, m_sw, m_w, m_up, m_down, m_in, m_out;
 var map;
 
 // Change this as necessary //
-var wshost = "ws://127.0.0.1:12346/server/server.php";
+var wshost = "ws://noric.org:12346/server/server.php";
 
 var mudhost;
 var mudport;

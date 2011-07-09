@@ -21,7 +21,7 @@
 	 * Standard host and port settings
 	 * Keep in mind that on a live host, you'll want to bind to the outbound IP or host name, not localhost or 127.0.0.1, etc.
 	 */	
-	define("HOST", "127.0.0.1");	
+	define("HOST", "192.168.1.112");	
 	define("PORT", "12346");	
 	
 	/*
@@ -35,8 +35,8 @@
 	 */
 	
 	define("WS_RESOURCE", "/wm_server/server.php");
-	define("WS_HOST", "127.0.0.1:12346");
-	define("WS_ORIGIN", "http://127.0.0.1");
+	define("WS_HOST", "192.168.1.112:12346");
+	define("WS_ORIGIN", "192.168.1.112");
 		
 	// Establish the WebMud server //	
 	$server = new WebMudServer(HOST, PORT, GC_WEBSOCKET, 512);	
