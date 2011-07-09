@@ -64,33 +64,17 @@
             	</div>
             </div>
             <div id="c_right">
-            	<div id="movement">
-					<table>
-					<tr>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='nw'; send();">NW</td>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='n'; send();">N</td>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='ne'; send();">NE</td>
-					</tr>
-					<tr>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='w'; send();">W</td>
-						<td style='text-align: center; vertical-align: middle; background: transparent; cursor: default;'></td>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='e'; send();">E</td>
-					</tr>
-					<tr>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='sw'; send();">SW</td>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='s'; send();">S</td>
-						<td style='text-align: center; vertical-align: middle;' onclick="document.forms[0].data.value='se'; send();">SE</td>
-					</tr>
-					</table>
-				</div>
+
 				
 				<div class="clear"></div>
 				
-				<h3>PHudBase Connection</h3>
+				<h3>Relay Connection</h3>
 				<div id="connection_ws"></div>
 				
 				<h3>MUD Connection</h3>
-				<div id="connection_mud"></div>			
+				<div id="connection_mud"></div>
+
+    <h3>Client based on PHudBase</h3>
 				
 				<div class="clear"></div>
 				<div class="clear"></div>
