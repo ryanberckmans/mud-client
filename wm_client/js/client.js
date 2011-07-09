@@ -165,6 +165,9 @@ function set_disconnected()
 
 function print(s) {
   var color = "#ccc";
+  if ( s != "\n" ) {
+    s = "\n" + s; 
+  }
   ow_Write("<span style='color:"+color+ "'>" + s + "</span>");
 }
 
