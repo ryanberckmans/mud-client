@@ -16,8 +16,8 @@ class WebMudServer extends SocketServer
 		parent::create();
 
     // Establish a Policy Server for Flash clients (optional) //
-    $this->policy_server = new PolicyServer(HOST, PORT_POLICY);             
-    $this->policy_server->create();
+    // $this->policy_server = new PolicyServer(HOST, PORT_POLICY);             
+    // $this->policy_server->create();
 	}
 	
 	function process()

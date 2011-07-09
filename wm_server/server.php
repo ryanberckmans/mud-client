@@ -23,7 +23,7 @@
 	 */	
 	define("HOST", "192.168.1.112");	
 	define("PORT", "12346");	
-  define("PORT_POLICY", "843"); // Leave this be: may require running ./server.php
+// define("PORT_POLICY", "843"); // Leave this be: may require running ./server.php
 
 	
 	/*
