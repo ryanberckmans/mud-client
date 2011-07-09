@@ -95,7 +95,7 @@ var mud_client = {
   },
   
   send: function(cmd) {
-    print(cmd); // echo
+    print(cmd.replace("_hack_newline","")); // echo
     send_to_mud(cmd);
   },
   
