@@ -85,7 +85,7 @@ div#output br {margin-top: 20px; margin-bottom: 20px; }
 	border: 1px solid #464646;
 	overflow: auto;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 	padding: 5px;
 	font-family: medievia;
 	font-size: 13px;
