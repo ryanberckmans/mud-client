@@ -1,3 +1,10 @@
+mud-client
+==========
+
+This is a fork of PHudBase web client.  The html/css/javascript front-end is heavily modified. The PHP backend (network bridge from client to MUD server) is slightly modified.
+
+Below is original PHudBase README from the time of the fork:
+
 ****************************************************************
 THANKS FOR DOWNLOADING PHUDBASE-WEBMUD
 ****************************************************************
