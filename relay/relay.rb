@@ -11,6 +11,7 @@ module MudConnection
   def strip_telnet data
     result = ""
     previous_was_255 = false
+    next_char_is_option_code = false
     data.each_byte do |next_char|
       case next_char
       when "\r".ord # strip \r, since Medievia sends \r\n for each newline
@@ -20,11 +21,14 @@ module MudConnection
         if previous_was_255
           case next_char
           when 249
-          when 253
-          when 251
+          when 251..254
+            next_char_is_option_code = true
           else
             result << "chr255chr#{next_char.to_i}"
           end
+        elsif next_char_is_option_code
+          result << "opt#{next_char.to_i}"
+          next_char_is_option_code = false
         else
           result << next_char
         end
