@@ -14,7 +14,8 @@
 <head>
 	<script>document.domain = document.domain</script>
 	<title>mud client</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<link type="text/css" media="screen" rel="stylesheet" href="css/colorbox.css"/>
 	<!--[if lt IE 7]>
@@ -27,10 +28,6 @@
 	<script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript" src="js/jquery.tools.min.js"></script>
 		
-	<script type="text/javascript" src="js/swfobject.js"></script>
-	<script type="text/javascript" src="js/FABridge.js"></script>
-	<script type="text/javascript" src="js/web_socket.js"></script>
-
   <script type="text/javascript" src="js/ws-host.js"></script>
 	<script type="text/javascript" src="js/client.js"></script>	
   <script type="text/javascript" src="js/parser/lib/compiler.js"></script>	
