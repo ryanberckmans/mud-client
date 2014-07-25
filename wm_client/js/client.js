@@ -59,15 +59,15 @@ $(document).ready(function(){
 	next_del = 0;	
 	
   // Set URL of your WebSocketMain.swf here:
-  WebSocket.__swfLocation = "WebSocketMain.swf";
+  //WebSocket.__swfLocation = "WebSocketMain.swf";
 
   // Set this to dump debug message from Flash to console.log:
-  WebSocket.__debug = true;
+  //WebSocket.__debug = true;
 
   mode = "websocket";
 
   // Set this to dump debug message from Flash to console.log:
-  WebSocket.__debug = true;
+  //WebSocket.__debug = true;
 	
 	socket = new WebSocket(wshost);	
 	
@@ -76,28 +76,27 @@ $(document).ready(function(){
     mud_login();
   }
 	
-	socket.onmessage = function(evt) {				
+	socket.onmessage = function(evt) {
 		handle_read(evt.data);
 	}
   
   socket.onclose = function(evt) {
+    ow_Write("<p>WebSocket closed: " + evt.data + "</p>");
     set_disconnected();
   }      
   
-  socket.onerror = function() {
-    ow_Write("<p>WebSocket error:</p>");
+  socket.onerror = function(evt) {
+    ow_Write("<p>WebSocket error: " + evt.data + "</p>");
   }
 
   output_div = window.top.document.getElementById("output");
 });
 
-var MUD = "localhost 4000";
 function mud_login() {
-  send_to_mud("PHUD:CONNECT " + MUD);
   postLogin();
 }
 
-function send_to_mud(msg) {
+function send_to_mud(msg) {  
   socket.send(msg);
 }
 
@@ -173,7 +172,7 @@ function print(s) {
   if ( s != "\n" ) {
     s = "\n" + s; 
   }
-  ow_Write("<span style='color:"+color+ "'>" + s + "</span>");
+  ow_Write("<span style='color:"+color+ "'><pre>" + s + "</pre></span>");
 }
 
 var utf8_to_html = [];
@@ -188,11 +187,12 @@ for( i = 128; i < 256 ; i++ ) {
 
 function handle_read(s)
 {
+  /* TODO I think this is made obsolete by charset=utf-8
   for( i = 128; i < 256 ; i++ ) {
     s = s.replace( utf8_to_html[i][0], utf8_to_html[i][1] );
-  }
+  }*/
 
-	data = eval("(" + s + ")");
+	var data = JSON.parse(s);
 
   // Output a standard message //
 	if (data.message) {
@@ -204,12 +204,12 @@ function handle_read(s)
 	if (data.server_status) ss_Write(data.server_status);
 	
 	// Set the connection status for the MUD
-	if (data.conn_status) 
+	if (data.conn_status)
 	{
 		if (data.conn_status == "connected")		
 			set_connected_mud();
 		else if (data.conn_status == "disconnected")
-			set_disconnected_mud();		
+			set_disconnected_mud();
 	}
 	
 	// Set the connection status for the PHudBase-WebMud server (sent by the Flash client) //
