@@ -81,7 +81,7 @@ $(document).ready(function(){
 	}
   
   socket.onclose = function(evt) {
-    ow_Write("<p>WebSocket closed: " + evt.data + "</p>");
+    ow_Write("<p>Refresh page to reconnect \\o/</p>");
     set_disconnected();
   }      
   
