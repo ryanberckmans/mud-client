@@ -46,27 +46,31 @@ module MudConnection
   end
 
   def unbind
-    print "mud disconnected"
     @mud_client_connection.on_mud_disconnect
-    @mud_client_connection.close_connection_after_writing
   end
 end
 
 module MudClientConnection
   def initialize
+    @@client_number ||= 0
+    @@client_number += 1
+    @client_number = @@client_number
+
     @driver = WebSocket::Driver.server(self)
 
     @driver.on(:connect) do
+      puts "#{@client_number} connected"
       if WebSocket::Driver.websocket?(@driver.env)
         @driver.start
       else
         # handle other HTTP requests
-        puts "MudClienntConnection#initialize immediately closing non-websocket connection"
+        puts "#{@client_number} MudClienntConnection#initialize immediately closing non-websocket connection"
         close_connection
       end
     end
 
     @driver.on(:open) do |e|
+      puts "#{@client_number} websocket handshake complete, connecting to mud"
       EM.connect(MUD, MUD_PORT, MudConnection) do |mud_connection| 
         @mud_connection = mud_connection
         @mud_connection.mud_client_connection = self
@@ -74,9 +78,9 @@ module MudClientConnection
       end
     end
 
-    @driver.on(:error)   { |e| puts "error: #{e.message}" }
-    @driver.on(:message) { |e| puts "received #{e.data}"; @mud_connection.send_data e.data }
-    @driver.on(:close)   { |e| close_connection_after_writing; @mud_connection.close_connection_after_writing }
+    @driver.on(:error)   { |e| puts "#{@client_number} error: #{e.message}" }
+    @driver.on(:message) { |e| @mud_connection.send_data e.data }
+    @driver.on(:close)   { |e| puts "#{@client_number} closed connection by client"; close_connection_after_writing; @mud_connection.close_connection_after_writing }
   end
 
   # WebSocket impl, do not touch
@@ -90,11 +94,14 @@ module MudClientConnection
   end
 
   def on_mud_connect
+    puts "#{@client_number} connected to mud"
     @driver.text(JSON.generate(:conn_status => "connected"))
   end
 
   def on_mud_disconnect
+    puts "#{@client_number} disconnected from mud, closing client connection"
     @driver.text(JSON.generate(:message => "Mud disconnected. Bye!", :conn_status => "disconnected"))
+    close_connection_after_writing
   end
 
   # Use msg() to send a text message for display to the user. Don't use write() or send_data()
