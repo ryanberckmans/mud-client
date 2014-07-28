@@ -106,7 +106,8 @@ function postLogin() {
 	$("#data_form").fadeIn(500, function() {document.getElementById("user_input").focus()});
   $("#c_right").hide();
   $("#c_output").css("margin-right", "auto");
-  $(window).blur( function(e) { $("#user_input").focus(); } );
+  $(window).blur( function(e) { document.getElementById("user_input").focus() } );
+  $(window).click( function(e) { document.getElementById("user_input").focus() } );
 }
 
 function user_input_down_arrow(evt) {
@@ -187,7 +188,9 @@ for( i = 128; i < 256 ; i++ ) {
 
 function handle_read(s)
 {
-  /* TODO I think this is made obsolete by charset=utf-8
+  // TODO I think this is made obsolete by charset=utf-8
+  // TBH, I'm not clear on what this does, or why we only do it from 128 to 256
+  /*
   for( i = 128; i < 256 ; i++ ) {
     s = s.replace( utf8_to_html[i][0], utf8_to_html[i][1] );
   }*/
