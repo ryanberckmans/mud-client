@@ -16,7 +16,7 @@ module MudConnection
       case next_char
       when "\r".ord # strip \r, since Medievia sends \r\n for each newline
       when 255 # strip out telnet interpret as a command - TELNET_IAC
-        previous_was_255 = true   
+        previous_was_255 = true
       else
         if previous_was_255
           case next_char

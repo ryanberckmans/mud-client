@@ -173,34 +173,42 @@ function print(s) {
   if ( s != "\n" ) {
     s = "\n" + s; 
   }
-  ow_Write("<span style='color:"+color+ "'><pre>" + s + "</pre></span>");
+  ow_Write("<span style='color:"+color+ "'>" + s + "</span>");
 }
 
-var utf8_to_html = [];
-for( i = 128; i < 256 ; i++ ) {
-  var hex = i.toString(16);
-  var utf8 = new RegExp("\\\\u00" + hex, "gi");
-  var html = "&#" + i.toString() + ";";
-  utf8_to_html[i] = []
-  utf8_to_html[i][0] = utf8;
-  utf8_to_html[i][0] = html;
+var unterminatedAnsiCodeRegex = /\x1B[^m]*$/m;
+var bufferedMudData = null; // if previous input contained a non-terminated Ansi sequence, it's stored here and will be prepended on the next mud msg. By definition, bufferedMudData =~ /^\x1B[^m]*$/ or null
+
+function handle_message(msg) {
+  function escapeHtmlEntities(s) {
+    return s.replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+  }
+
+  if (bufferedMudData) {
+    msg = bufferedMudData + msg;
+    bufferedMudData = null;
+  }
+
+  var match = msg.match(unterminatedAnsiCodeRegex);
+  if (match) {
+    bufferedMudData = msg.substr(match.index);
+    msg = msg.substr(0,match.index);
+  }
+
+  ow_Write(mud_client.color_span() + // re-open <span> for current color, because html we append won't be inserted into the most recent span
+    mud_client.output_parser.parse(escapeHtmlEntities(msg)));
 }
 
 function handle_read(s)
 {
-  // TODO I think this is made obsolete by charset=utf-8
-  // TBH, I'm not clear on what this does, or why we only do it from 128 to 256
-  /*
-  for( i = 128; i < 256 ; i++ ) {
-    s = s.replace( utf8_to_html[i][0], utf8_to_html[i][1] );
-  }*/
-
 	var data = JSON.parse(s);
 
   // Output a standard message //
 	if (data.message) {
-    ow_Write(mud_client.color_span() + // re-open <span> for current color, because html we append won't be inserted into the most recent span
-             mud_client.output_parser.parse(data.message));
+    handle_message(data.message);
   }
 	
 	// Write a WebMud server status message //
