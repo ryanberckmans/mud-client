@@ -15,19 +15,21 @@ module MudConnection
     data.each_byte do |next_char|
       case next_char
       when "\r".ord # strip \r, since Medievia sends \r\n for each newline
-      when 255
+      when 255 # strip out telnet interpret as a command - TELNET_IAC
         previous_was_255 = true   
       else
         if previous_was_255
           case next_char
-          when 249
-          when 251..254
+          when 249 # strip out telnet goahead -  TELNET_GA
+          when 250 # DEBUG - char250 may be legal. It's used for telnet option subnegotiation, but I'm unsure if it can appear legally on its own. For now, translate to "chr250" as a debug
+            result << "chr250"
+          when 251..254 # strip out telnet options, each of 251-254 is followed by a more specific option code, which we also wish to strip out - TELNET_WILL/WONT/DO/DONT
             next_char_is_option_code = true
           else
-            result << "chr255chr#{next_char.to_i}"
+            result << "chr255chr#{next_char.to_i}" # DEBUG - we don't expect anything else to follow TELNET_IAC, so translate to chr255chr(i) as a debug
           end
         elsif next_char_is_option_code
-          result << "opt#{next_char.to_i}"
+          #result << "opt#{next_char.to_i}" # DEBUG - output that we suppressed the option
           next_char_is_option_code = false
         else
           result << next_char
