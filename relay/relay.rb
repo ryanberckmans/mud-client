@@ -80,7 +80,7 @@ module MudClientConnection
 
     @driver.on(:error)   { |e| puts "#{@client_number} error: #{e.message}" }
     @driver.on(:message) { |e| @mud_connection.send_data e.data }
-    @driver.on(:close)   { |e| puts "#{@client_number} closed connection by client"; close_connection_after_writing; @mud_connection.close_connection_after_writing }
+    @driver.on(:close)   { |e| puts "#{@client_number} closed connection by client"; close_connection_after_writing; @mud_connection.close_connection_after_writing if @mud_connection }
   end
 
   # WebSocket impl, do not touch
@@ -95,18 +95,17 @@ module MudClientConnection
 
   def on_mud_connect
     puts "#{@client_number} connected to mud"
-    @driver.text(JSON.generate(:conn_status => "connected"))
   end
 
   def on_mud_disconnect
     puts "#{@client_number} disconnected from mud, closing client connection"
-    @driver.text(JSON.generate(:message => "Mud disconnected. Bye!", :conn_status => "disconnected"))
+    @driver.text("Mud disconnected. Bye!")
     close_connection_after_writing
   end
 
   # Use msg() to send a text message for display to the user. Don't use write() or send_data()
   def msg data
-    @driver.text(JSON.generate(:message => data))
+    @driver.text(data)
   end
 end
 

@@ -204,33 +204,7 @@ function handle_message(msg) {
 
 function handle_read(s)
 {
-	var data = JSON.parse(s);
-
-  // Output a standard message //
-	if (data.message) {
-    handle_message(data.message);
-  }
-	
-	// Write a WebMud server status message //
-	if (data.server_status) ss_Write(data.server_status);
-	
-	// Set the connection status for the MUD
-	if (data.conn_status)
-	{
-		if (data.conn_status == "connected")		
-			set_connected_mud();
-		else if (data.conn_status == "disconnected")
-			set_disconnected_mud();
-	}
-	
-	// Set the connection status for the PHudBase-WebMud server (sent by the Flash client) //
-	if (data.fconn_status)
-	{
-		if (data.fconn_status == "connected")		
-			set_connected_phudbase();
-		else if (data.fconn_status == "disconnected")
-			set_disconnected();		
-	}
+	handle_message(s);
 }
 
 
