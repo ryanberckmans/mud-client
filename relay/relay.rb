@@ -10,6 +10,7 @@ module MudConnection
 
   def strip_telnet data
     result = ""
+    result.force_encoding Encoding::UTF_8 # the MUD sends ASCII_8BIT encoded strings; rebuild the string in UTF_8 and receive transcoding for free
     previous_was_255 = false
     next_char_is_option_code = false
     data.each_byte do |next_char|
@@ -95,6 +96,7 @@ module MudClientConnection
 
   def on_mud_connect
     puts "#{@client_number} connected to mud"
+    @driver.text "\nInstructions:\n\n    Use 'map font 3'. If you have problems, use 'map font 1'\n    Semicolon and repetition work: 'ack;blink;/3 smile'\n\nWanted: expert to fix medievia.ttf so this can use 'map font 5'.\n"
   end
 
   def on_mud_disconnect
