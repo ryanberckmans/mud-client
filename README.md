@@ -21,7 +21,7 @@ mud-client uses [gulp.js](https://github.com/gulpjs/gulp).
 
 # Mud text pipeline
 
-WIP design.
+WIP design. Not yet implemented.
 
 How does MUD data get displayed in the player's browser? How does this work with modern mud client features, such as a 50k line scrollback, scripting, grepping, logging, teeing, etc.?
 
