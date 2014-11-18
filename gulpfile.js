@@ -4,11 +4,15 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 
 var paths = {
-  client: 'wm_client/*'
+  client: 'client/*'
 }
 
+gulp.task('clean', function() {
+  del(['build']);
+});
+
 gulp.task('client', function() {
-  return gulp.src(paths.client, { base: 'wm_client'})
+  return gulp.src(paths.client, { base: 'client'})
     .pipe(gulp.dest('build'))
 });
 
