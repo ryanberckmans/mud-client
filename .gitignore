@@ -2,3 +2,5 @@
 *ws-host.js
 wm_client/lighttpd.log
 node_modules/*
+build/*
+npm-debug.log
