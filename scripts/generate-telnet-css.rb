@@ -1,3 +1,15 @@
+#!/usr/bin/env ruby
+
+# What does generate-ansi-color-css do?
+#
+# mud-client converts ansi codes to css classes. 
+# ANSI has only 8 possible colors, squared for foreground/background, times 2 for bold.
+#
+# This yields 8 * 8 * 2 = 128 unique color combinations.
+#
+# generate-ansi-color-css prints these 128 combinations.
+#
+# TODO - this script should be integrated as a build step
 
 fg = {"black" => "color: #000000;",
   "red" => "color: #bb0000;",
@@ -46,4 +58,3 @@ fg_b.each_pair { |k,v|
     puts ".tnc_#{k}_#{k2} { #{v} #{v2} }"
   }
 }
-
