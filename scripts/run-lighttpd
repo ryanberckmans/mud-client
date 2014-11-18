@@ -3,4 +3,4 @@
 # Run me from mud-client root directory:
 # $ scripts/run-lighttpd
 
-env MUD_CLIENT_ROOT=`cd wm_client && pwd` lighttpd -D -f scripts/lighttpd.conf
+env MUD_CLIENT_ROOT=`cd client && pwd` lighttpd -D -f scripts/lighttpd.conf
