@@ -2,7 +2,6 @@
 var gulp = require('gulp');
 var coffee = require('gulp-coffee');
 var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
 var mocha = require('gulp-mocha');
 var del = require('del');
 
@@ -27,9 +26,7 @@ gulp.task('test', function() {
 
 gulp.task('coffee', ['test'], function() {
   return gulp.src(paths.coffee)
-    .pipe(sourcemaps.init())
-      .pipe(coffee())
-    .pipe(sourcemaps.write())
+    .pipe(coffee())
     .pipe(gulp.dest(paths.dest + '/js'));
 });
 
@@ -38,4 +35,10 @@ gulp.task('client', function() {
     .pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('default', ['coffee', 'client']);
+gulp.task('watch', function() {
+  gulp.watch([paths.coffee, paths.test], ['test'])
+});
+
+gulp.task('build', ['test', 'coffee', 'client']);
+
+gulp.task('default', ['build']);
