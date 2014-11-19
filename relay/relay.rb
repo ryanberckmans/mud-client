@@ -8,6 +8,22 @@ MUD_PORT = 4000
 module MudConnection
   attr_accessor :mud_client_connection
 
+  # split_by_TELNET_GA
+  #
+  # @param  {String} data - raw socket data from the MUD
+  #
+  # @return {String, String} msg, buffer
+  #                          msg    - data from the mud terminated by TELNET_GA
+  #                                   (the TELNET_GA code isn't included in the return value)
+  #                          buffer - a partial msg from the MUD, not yet terminated by TELNET_GA (Go Ahead)
+  #                                   prepended with '\n' to simulate the start of a new line after TELNET_GA
+  TELNET_GA_REGEX = /#{255.chr}#{249.chr}/mo
+  def split_by_TELNET_GA data
+    match_data = TELNET_GA_REGEX.match data
+    return nil, data unless match_data
+    return match_data.pre_match, match_data.post_match.prepend("\n")
+  end
+
   def strip_telnet data
     result = ""
     result.force_encoding Encoding::UTF_8 # the MUD sends ASCII_8BIT encoded strings; rebuild the string in UTF_8 and receive transcoding for free
@@ -42,8 +58,14 @@ module MudConnection
   end
 
   def receive_data data
-    data = strip_telnet data
-    @mud_client_connection.msg data
+    if @buffer
+      data = @buffer + data
+      @buffer = nil
+    end
+    msg, @buffer = split_by_TELNET_GA data
+    if msg
+      @mud_client_connection.msg strip_telnet(msg)
+    end
   end
 
   def unbind
