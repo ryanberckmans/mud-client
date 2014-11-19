@@ -6,9 +6,9 @@ A web client for playing online multiplayer text games.
 
 ## Build
 
-mud-client uses [gulp.js](https://github.com/gulpjs/gulp).
+mud-client uses [gulp.js](https://github.com/gulpjs/gulp) and `coffee-script`.
 
-1. npm install --global gulp
+1. npm install --global gulp coffee-script
 2. npm install
 3. gulp
 
