@@ -1,26 +1,45 @@
 <!doctype html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Mocha Spec Runner</title>
-    <link rel="stylesheet" href="bower_components/mocha/mocha.css">
-</head>
-<body>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mocha Test Runner</title>
+
+    <!-- build:css scripts/vendor/mocha.css -->
+    <script src="bower_components/mocha/mocha.css"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
     <div id="mocha"></div>
+    <!-- build:js scripts/vendor/mocha.js -->
     <script src="bower_components/mocha/mocha.js"></script>
+    <!-- endbuild -->
     <script>mocha.setup('bdd')</script>
+    <!-- build:js scripts/vendor/chai.js -->
     <script src="bower_components/chai/chai.js"></script>
+    <!-- endbuild -->
     <script>
         var assert = chai.assert;
         var expect = chai.expect;
         var should = chai.should();
     </script>
 
-    <!-- include source files here... -->
+    <!-- since the test/ website is built into a copy of dist/, scripts/main.js already contains all the production code for our site -->
+    <script src="scripts/main.js"></script>
 
+    <!-- build:js spec/test.js -->
     <!-- include spec files here... -->
     <script src="spec/test.js"></script>
+    <script src="spec/mud-stream.js"></script>
+    <!-- endbuild -->
 
-    <script>mocha.run()</script>
-</body>
+    <script>
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
+    </script>
+  </body>
 </html>
