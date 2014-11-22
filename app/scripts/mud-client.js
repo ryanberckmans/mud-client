@@ -1,4 +1,13 @@
 
+$(document).ready(function() {
+  var resizeUi = function() {
+    $("#interface").height($(window).height() - 20);
+    $("#output, #scroller, #right").height($("#interface").height() - 50);
+  }
+  resizeUi();
+  $(window).resize(resizeUi);
+});
+
 $.get("input-grammar.txt", function(g) {
   mud_client.input_grammar = g;
   mud_client.input_parser = PEG.buildParser(g);
