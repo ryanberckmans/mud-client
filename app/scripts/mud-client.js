@@ -8,23 +8,13 @@ $(document).ready(function() {
   $(window).resize(resizeUi);
 });
 
-$.get("input-grammar.txt", function(g) {
-  mud_client.input_grammar = g;
-  mud_client.input_parser = PEG.buildParser(g);
-});
-
-$.get("output-grammar.txt", function(g) {
-  mud_client.output_grammar = g;
-  mud_client.output_parser = PEG.buildParser(g);
-});
-      
 var mud_client = {
   
-  input_grammar: null,
-  input_parser: null,
+  input_grammar: inputGrammar,
+  input_parser: PEG.buildParser(inputGrammar),
 
-  output_grammar: null,
-  output_parser: null,
+  output_grammar: outputGrammar,
+  output_parser: PEG.buildParser(outputGrammar),
 
   fg_color: "white",
   bg_color: "black_bg",
