@@ -25,7 +25,8 @@
         var should = chai.should();
     </script>
 
-    <!-- since the test/ website is built into a copy of dist/, scripts/main.js already contains all the production code for our site -->
+    <!-- since the test/ website is built into a copy of dist/, scripts/{vendor,main}.js already contains all the production code for our site -->
+    <script src="scripts/vendor.js"></script>
     <script src="scripts/main.js"></script>
 
     <!-- build:js spec/test.js -->
