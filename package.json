@@ -1,6 +1,6 @@
 {
   "name": "mud-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "ryanberckmans/mud-client",
   "dependencies": {},
   "devDependencies": {
