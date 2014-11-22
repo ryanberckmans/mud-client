@@ -12,17 +12,19 @@ class @MudStream
 
   # hookFunction must have the same signature as pushLine()
   onPushLine: (hookFunction) ->
-    @pushLineHookFunctions.add hookFunction
+    @pushLineHookFunctions.push hookFunction
     null
 
   offPushLine: (hookFunction) ->
-    @pushLineHookFunctions.delete hookFunction
+    hookFunctionIndex = @pushLineHookFunctions.indexOf hookFunction
+    @pushLineHookFunctions.splice hookFunctionIndex, 1 if hookFunctionIndex > -1
     null
 
   addChild: (mudStream) ->
-    @childMudStreams.add mudStream
+    @childMudStreams.push mudStream
     null
 
   removeChild: (mudStream) ->
-    @childMudStreams.delete mudStream
+    mudStreamIndex = @childMudStreams.indexOf mudStream
+    @childMudStreams.splice mudStreamIndex, 1 if mudStreamIndex > -1
     null
