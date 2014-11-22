@@ -6,10 +6,10 @@ A web client for playing online multiplayer text games.
 
 ## Build
 
-mud-client uses [gulp.js](https://github.com/gulpjs/gulp).
+mud-client uses [gulpjs](https://github.com/gulpjs/gulp).
 
 1. npm install --global gulp
-2. npm install
+2. npm install && bower install && cd test && bower install && cd ..
 3. gulp
 
 ## Deploy
@@ -18,10 +18,13 @@ mud-client uses [gulp.js](https://github.com/gulpjs/gulp).
 2. `js/ws-host.js` must be set to the relay.rb server endpoint
 3. deploy `dist/` to your webserver
 
+## Yeoman gulp-webapp
+
+This project is based on [Yeoman's](http://yeoman.io/) [gulp-webapp generator](https://github.com/yeoman/generator-gulp-webapp).
 
 # Mud text pipeline
 
-WIP design. Not yet implemented.
+OUTDATED! TODO: update this section
 
 How does MUD data get displayed in the player's browser? How does this work with modern mud client features, such as a 50k line scrollback, scripting, grepping, logging, teeing, etc.?
 
