@@ -172,8 +172,13 @@ function set_disconnected()
 // newLines are rewritten as <br>, and any trailing newline is discarded
 function echo(htmlText) {
   var htmlTextLines = htmlText.split("\n");
+
+  // If the last character in htmlText is "\n", we want to discard the last element in htmlTextLines,
+  // since it's just an empty string. This has the same effect as htmlText.chomp() - no chomp() function exists in javascript
+  if (htmlTextLines[htmlTextLines.length-1].length < 1) htmlTextLines.pop();
+
   var len = htmlTextLines.length;
-  if (len < 1) { return; }
+  if (len < 1) return;
 
   // the first line in an echo isn't prepended with <br>, 
   // this allows a user command to appear on the same line as the prompt
@@ -196,7 +201,15 @@ rootMudStream.onPushLine(function(clearTextLine, domLine) {
 
 function handle_message(msg) {
   var rawLines = msg.split("\n");
-  for(var i = 0, len = rawLines.length; i < len; ++i) {
+  
+  // skip rawLines[0] when it's the empty string.
+  // Each MUD msg begins with a newline, causing rawLines[0] to be the empty string during regular play
+  // Since each rawLines translates into a line of output, rawLines[0] inserts an unnecessary blank line
+  if (rawLines[0].length > 0) {
+    rootMudStream.pushLine(renderClearTextLine(rawLines[0]),renderDOMLine(ansiColorState, rawLines[0]));
+  }
+
+  for(var i = 1, len = rawLines.length; i < len; ++i) {
     rootMudStream.pushLine(renderClearTextLine(rawLines[i]),renderDOMLine(ansiColorState, rawLines[i]));
   }
 }
