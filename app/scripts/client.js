@@ -81,12 +81,12 @@ $(document).ready(function(){
 	}
   
   socket.onclose = function(evt) {
-    ow_Write("<p>Refresh page to reconnect \\o/</p>");
+    echo("<p>Refresh page to reconnect \\o/</p>");
     set_disconnected();
   }      
   
   socket.onerror = function(evt) {
-    ow_Write("<p>WebSocket error: " + evt.data + "</p>");
+    echo("<p>WebSocket error: " + evt.data + "</p>");
   }
 
   output_div = window.top.document.getElementById("output");
@@ -168,22 +168,37 @@ function set_disconnected()
 	m_conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
 }
 
-function print(s) {
-  if ( s != "\n" ) {
-    s = "\n" + s; 
+// htmlTextLine is a string that may contain newlines
+// newLines are rewritten as <br>, and any trailing newline is discarded
+function echo(htmlText) {
+  var htmlTextLines = htmlText.split("\n");
+  var len = htmlTextLines.length;
+  if (len < 1) { return; }
+
+  // the first line in an echo isn't prepended with <br>, 
+  // this allows a user command to appear on the same line as the prompt
+  var domLine = $.parseHTML("<span class='echo_line echo_color'>" + htmlTextLines[0] + "</span>")[0];
+  ow_Write(domLine);
+
+  // subsequent echo lines, past the first, are prepended with <br>
+  for(var i = 1; i < len; ++i) {
+    domLine = $.parseHTML("<span class='echo_line echo_color'><br>" + htmlTextLines[i] + "</span>")[0];
+    ow_Write(domLine);
   }
-  ow_Write("<span class='echo_color'>" + s + "</span>");
 }
 
-rootMudStream = new MudStream()
-ansiColorState = new AnsiColorState()
+rootMudStream = new MudStream();
+ansiColorState = new AnsiColorState();
 
 rootMudStream.onPushLine(function(clearTextLine, domLine) {
   ow_Write(domLine);
 });
 
 function handle_message(msg) {
-  rootMudStream.pushLine(renderClearTextLine(msg),renderDOMLine(ansiColorState, msg));
+  var rawLines = msg.split("\n");
+  for(var i = 0, len = rawLines.length; i < len; ++i) {
+    rootMudStream.pushLine(renderClearTextLine(rawLines[i]),renderDOMLine(ansiColorState, rawLines[i]));
+  }
 }
 
 function handle_read(s)
@@ -191,15 +206,8 @@ function handle_read(s)
 	handle_message(s);
 }
 
-function ow_Write(text)
+function ow_Write(dom)
 {	
-  var lines = $("#output").find("br").length;
-  while( lines > 120 ) {
-    var head = $("#output").children().slice(0,5);
-    var lines_in_head = $(head).find("br").length + $(head).filter("br").length;
-    $(head).remove();
-    lines -= lines_in_head;
-  }
-	output_div.innerHTML += text;
+  output_div.appendChild(dom);  
 	output_div.scrollTop = output_div.scrollHeight;
 }

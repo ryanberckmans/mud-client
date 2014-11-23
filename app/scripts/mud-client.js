@@ -14,7 +14,7 @@ var mud_client = {
   input_parser: PEG.buildParser(inputGrammar),
   
   send: function(cmd) {
-    print(cmd.replace(/_hack_newline/g,"")); // echo
+    echo(cmd.replace(/_hack_newline/g,"")); // echo
     send_to_mud(cmd);
   },
   
