@@ -13,13 +13,20 @@
 # ansiColorState - an instance of AnsiColorState representing current color as of the start of rawLine
 # rawLine - string containing only printable characters and well-formed ansi color codes, and no newlines
 #
-# Returns a DOM object ready to display to the user (TODO - returns a html string right now)
+# Returns a DOM node ready to display to the user (TODO - returns a html string right now)
 @renderDOMLine = (ansiColorState, rawLine) ->
   # prepend renderAnsiColor.colorSpan() to re-open the current color
-  renderAnsiColor.colorSpan(ansiColorState) + ansiColorParser.parse(escapeHtmlEntities(rawLine), {
+  htmlLine = renderAnsiColor.colorSpan(ansiColorState) + ansiColorParser.parse(escapeHtmlEntities(rawLine), {
       ansiColorState: ansiColorState
       renderAnsiColor: renderAnsiColor
     })
+
+  # while parsing ansi colors, we only close a <span> when starting a new color, 
+  # so there's always an open <span> at the end of htmlLine. 
+  # Close the last color span and package it up as a line.
+  domLine = "<span class='one_line'>" + htmlLine + "</span><br></span>"
+
+  $.parseHTML(domLine)[0] # parseHTML always returns an array of DOM nodes. We expect this array to have length 1, since htmlLine is wrapped in a span
 
 # Public. AnsiColorState must be instantiated by the client and passed to renderDOMLine.
 # Clients should NOT modify AnsiColorState directly.
