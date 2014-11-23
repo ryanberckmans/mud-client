@@ -169,47 +169,27 @@ function set_disconnected()
 }
 
 function print(s) {
-  var color = "#ccc";
   if ( s != "\n" ) {
     s = "\n" + s; 
   }
-  ow_Write("<span style='color:"+color+ "'>" + s + "</span>");
-}
-
-var unterminatedAnsiCodeRegex = /\x1B[^m]*$/m;
-var bufferedMudData = null; // if previous input contained a non-terminated Ansi sequence, it's stored here and will be prepended on the next mud msg. By definition, bufferedMudData =~ /^\x1B[^m]*$/ or null
-
-
-// @param {String} rawLine - containing only printable characters and well-formed ansi color codes, and no newlines
-function renderDOMLine(rawLine) {
-  function escapeHtmlEntities(s) {
-    return s.replace(/&/g, '&amp;')
-            .replace(/"/g, '&quot;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-  }
-
-  // TODO - parse it to DOM
-  // re-open <span> for current color, because html we append won't be inserted into the most recent span
-  return mud_client.color_span() + mud_client.output_parser.parse(escapeHtmlEntities(rawLine));
+  ow_Write("<span class='echo_color'>" + s + "</span>");
 }
 
 rootMudStream = new MudStream()
+ansiColorState = new AnsiColorState()
 
 rootMudStream.onPushLine(function(clearTextLine, domLine) {
   ow_Write(domLine);
-  console.log(clearTextLine);
 });
 
 function handle_message(msg) {
-  rootMudStream.pushLine(renderClearTextLine(msg),renderDOMLine(msg));
+  rootMudStream.pushLine(renderClearTextLine(msg),renderDOMLine(ansiColorState, msg));
 }
 
 function handle_read(s)
 {
 	handle_message(s);
 }
-
 
 function ow_Write(text)
 {	

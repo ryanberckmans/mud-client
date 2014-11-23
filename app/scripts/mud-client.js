@@ -13,9 +13,6 @@ var mud_client = {
   input_grammar: inputGrammar,
   input_parser: PEG.buildParser(inputGrammar),
 
-  output_grammar: outputGrammar,
-  output_parser: PEG.buildParser(outputGrammar),
-
   fg_color: "white",
   bg_color: "black_bg",
   color: "white_black_bg",

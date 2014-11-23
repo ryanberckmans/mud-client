@@ -10,6 +10,8 @@
 # generate-ansi-color-css prints these 128 combinations.
 #
 # TODO - this script should be integrated as a build step
+# TODO - drop the "_bg"
+# TODO - don't have separate foreground/background colors - there's only one color palette. Use color and color_bold
 
 fg = {"black" => "color: #000000;",
   "red" => "color: #bb0000;",
@@ -49,12 +51,12 @@ bg_b = {"black_bg_b" => "background-color: #000000; ",
 
 fg.each_pair { |k,v|
   bg.each_pair { |k2,v2|
-    puts ".tnc_#{k}_#{k2} { #{v} #{v2} }"
+    puts ".ansi_color_#{k}_#{k2} { #{v} #{v2} }"
   }
 }
 
 fg_b.each_pair { |k,v|
   bg_b.each_pair { |k2,v2|
-    puts ".tnc_#{k}_#{k2} { #{v} #{v2} }"
+    puts ".ansi_color_#{k}_#{k2} { #{v} #{v2} }"
   }
 }
