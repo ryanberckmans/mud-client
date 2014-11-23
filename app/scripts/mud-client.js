@@ -42,6 +42,8 @@ var mud_client = {
       cmds = [];
     }
 
+    // TODO - commands should have "trim() called on them. No whitespace to left or right"
+    // TODO - fix hack_newline crap and how it breaks pagination
     for ( var i=0; i < cmds.length ; i++ ) {
       if ( cmds[i] == null ) {
         cmds.splice(i,1);
