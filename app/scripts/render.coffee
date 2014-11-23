@@ -24,7 +24,8 @@
   # while parsing ansi colors, we only close a <span> when starting a new color, 
   # so there's always an open <span> at the end of htmlLine. 
   # Close the last color span and package it up as a line.
-  domLine = "<span class='one_line'>" + htmlLine + "</span><br></span>"
+  # prepend <br>, instead of appending it, to match how MUDs send lines - newline comes at the beginning.
+  domLine = "<span class='one_line'><br>" + htmlLine + "</span></span>"
 
   $.parseHTML(domLine)[0] # parseHTML always returns an array of DOM nodes. We expect this array to have length 1, since htmlLine is wrapped in a span
 
