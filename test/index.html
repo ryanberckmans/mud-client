@@ -19,6 +19,9 @@
     <!-- build:js scripts/vendor/chai.js -->
     <script src="bower_components/chai/chai.js"></script>
     <!-- endbuild -->
+    <!-- build:js scripts/vendor/sinon.js -->
+    <script src="bower_components/sinon-browser-only/sinon.js"></script>
+    <!-- endbuild -->
     <script>
         var assert = chai.assert;
         var expect = chai.expect;
@@ -29,11 +32,11 @@
     <script src="scripts/vendor.js"></script>
     <script src="scripts/main.js"></script>
 
-    <!-- build:js spec/test.js -->
     <!-- include spec files here... -->
-    <script src="spec/test.js"></script>
+    <!-- build:js spec/mud-stream.js -->
     <script src="spec/mud-stream.js"></script>
     <!-- endbuild -->
+    
 
     <script>
       if (window.mochaPhantomJS) {
