@@ -28,6 +28,13 @@ var mudport;
 
 var scrollback, prevent_autoscroll=false;
 
+
+fromMudAnsiColorStream = new AnsiColorStream({
+  renderClearTextLine: renderClearTextLine,
+  renderDOMLine: renderDOMLine,
+  ansiColorState: new AnsiColorState()
+});
+
 $(document).ready(function(){		    
 	conn_div = document.getElementById('connection_ws');
 	m_conn_div = document.getElementById('connection_mud');	
@@ -77,7 +84,7 @@ $(document).ready(function(){
   }
 	
 	socket.onmessage = function(evt) {
-		handle_read(evt.data);
+		fromMudAnsiColorStream.pushRaw(evt.data);
 	}
   
   socket.onclose = function(evt) {
@@ -192,32 +199,12 @@ function echo(htmlText) {
   }
 }
 
-rootTextStream = new TextStream();
-ansiColorState = new AnsiColorState();
+mudBufferTextStream = new TextStream();
+fromMudAnsiColorStream.addChild(mudBufferTextStream);
 
-rootTextStream.onPushLine(function(clearTextLine, domLine) {
+mudBufferTextStream.onPushLine(function(clearTextLine, domLine) {
   ow_Write(domLine);
 });
-
-function handle_message(msg) {
-  var rawLines = msg.split("\n");
-  
-  // skip rawLines[0] when it's the empty string.
-  // Each MUD msg begins with a newline, causing rawLines[0] to be the empty string during regular play
-  // Since each rawLines translates into a line of output, rawLines[0] inserts an unnecessary blank line
-  if (rawLines[0].length > 0) {
-    rootTextStream.pushLine(renderClearTextLine(rawLines[0]),renderDOMLine(ansiColorState, rawLines[0]));
-  }
-
-  for(var i = 1, len = rawLines.length; i < len; ++i) {
-    rootTextStream.pushLine(renderClearTextLine(rawLines[i]),renderDOMLine(ansiColorState, rawLines[i]));
-  }
-}
-
-function handle_read(s)
-{
-	handle_message(s);
-}
 
 function ow_Write(dom)
 {	
