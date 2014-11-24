@@ -94,9 +94,7 @@ $(document).ready(function(){
   
   socket.onerror = function(evt) {
     echo("<p>WebSocket error: " + evt.data + "</p>");
-  }
-
-  output_div = window.top.document.getElementById("output");
+  }  
 });
 
 function mud_login() {
@@ -175,26 +173,16 @@ function set_disconnected()
 	m_conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
 }
 
-echoStream = new EchoStream({jQuery: $});
+var outputElement = window.top.document.getElementById("output");
+
+var mainBuffer = new BufferStream({ outputElement: outputElement });
+
+fromMudAnsiColorStream.addChild(mainBuffer);
+
+var echoStream = new EchoStream({jQuery: $});
+echoStream.addChild(mainBuffer);
 
 // Todo: echo shouldn't be a global function, should inject echoStream as needed
 function echo(s) {
   echoStream.pushRaw(s);
-}
-
-echoStream.onPushLine(function(clearTextLine, domLine) {
-  ow_Write(domLine);
-});
-
-mudBufferTextStream = new TextStream();
-fromMudAnsiColorStream.addChild(mudBufferTextStream);
-
-mudBufferTextStream.onPushLine(function(clearTextLine, domLine) {
-  ow_Write(domLine);
-});
-
-function ow_Write(dom)
-{	
-  output_div.appendChild(dom);  
-	output_div.scrollTop = output_div.scrollHeight;
 }
