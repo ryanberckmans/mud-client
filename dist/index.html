@@ -1,0 +1,74 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>mud client</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        
+
+        <link rel="stylesheet" href="styles/main.css">
+
+        <script src="scripts/vendor/modernizr.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- TODO - clean up this html. Unnecessary elements from the PHuDBase days -->
+        <div id="interface">
+            <div id="c_header">
+            </div>
+            <div id="c_wrap">
+                <div id="c_output">
+                    <div id="output" class="default_color">
+                    </div>
+                </div>
+                <div id="c_right">
+
+                
+                    <div class="clear"></div>
+                
+                    <h3>Relay Connection</h3>
+                    <div id="connection_ws"></div>
+                
+                    <h3>MUD Connection</h3>
+                    <div id="connection_mud"></div>
+
+                    <h3>Client based on PHudBase</h3>
+                
+                    <div class="clear"></div>
+                    <div class="clear"></div>
+                    <div class="clear"></div>
+                
+                    <div id="autoscroll">Auto-scrolling Paused</div>    
+                </div>
+            
+                <div class="clear"></div>
+            
+                <div id="c_footer">
+                    <form autocomplete="off" id="data_form" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
+                        <input id="user_input" type="text" value="">                    
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+
+        <script src="scripts/vendor.js"></script>
+
+        <script src="scripts/main.js"></script>
+    </body>
+</html>
