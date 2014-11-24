@@ -1,33 +1,33 @@
 
-describe 'MudStream', ->
+describe 'TextStream', ->
   it "should instantiate", ->
-    new MudStream
+    new TextStream
 
   describe 'a new instance', ->
     beforeEach ->
-      @mudStream = new MudStream
+      @textStream = new TextStream
 
     context 'with a hook function', ->
       beforeEach ->
         @fn = sinon.spy()
-        @mudStream.onPushLine @fn
+        @textStream.onPushLine @fn
 
       it "propagates pushLine to hook function", ->
         clearTextLine = "clear"
         domLine = "dom"
-        @mudStream.pushLine clearTextLine, domLine
+        @textStream.pushLine clearTextLine, domLine
         assert @fn.calledOnce
         assert @fn.calledWith clearTextLine, domLine
 
       context 'with an additional hook function', ->
         beforeEach ->
           @fn2 = sinon.spy()
-          @mudStream.onPushLine @fn2
+          @textStream.onPushLine @fn2
 
         it "propagates pushLine to both children", ->
           clearTextLine = "clear"
           domLine = "dom"
-          @mudStream.pushLine clearTextLine, domLine
+          @textStream.pushLine clearTextLine, domLine
           assert @fn.calledOnce
           assert @fn.calledWith clearTextLine, domLine
           assert @fn2.calledOnce
@@ -35,37 +35,37 @@ describe 'MudStream', ->
 
       context 'with the added hook function removed', ->
         beforeEach ->
-          @mudStream.offPushLine @fn
+          @textStream.offPushLine @fn
 
-        it "no longer propagates pushedLine to the removed child mudStream", ->
-          @mudStream.pushLine "foo", "bar"
+        it "no longer propagates pushedLine to the removed child textStream", ->
+          @textStream.pushLine "foo", "bar"
           assert not @fn.calledOnce
 
-    context 'with a child mudStream', ->
+    context 'with a child textStream', ->
       beforeEach ->
-        @child = new MudStream
-        @mudStream.addChild @child
+        @child = new TextStream
+        @textStream.addChild @child
 
-      it "propagates pushLine to the child mudStream", ->
+      it "propagates pushLine to the child textStream", ->
         spy = sinon.spy @child, "pushLine"
         clearTextLine = "clear"
         domLine = "dom"
-        @mudStream.pushLine clearTextLine, domLine
+        @textStream.pushLine clearTextLine, domLine
         assert spy.calledOnce
         assert spy.calledWith clearTextLine, domLine
         #spy.should.have.been.calledWith clearTextLine, domLine
 
-      context 'with an additional child mudStream', ->
+      context 'with an additional child textStream', ->
         beforeEach ->
-          @child2 = new MudStream
-          @mudStream.addChild @child2
+          @child2 = new TextStream
+          @textStream.addChild @child2
 
         it "propagates pushLine to both children", ->
           spy = sinon.spy @child, "pushLine"
           spy2 = sinon.spy @child2, "pushLine"
           clearTextLine = "clear"
           domLine = "dom"
-          @mudStream.pushLine clearTextLine, domLine
+          @textStream.pushLine clearTextLine, domLine
           assert spy.calledOnce
           assert spy.calledWith clearTextLine, domLine
           assert spy2.calledOnce
@@ -73,9 +73,9 @@ describe 'MudStream', ->
 
       context 'with the added child removed', ->
         beforeEach ->
-          @mudStream.removeChild @child
+          @textStream.removeChild @child
 
-        it "no longer propagates pushedLine to the removed child mudStream", ->
+        it "no longer propagates pushedLine to the removed child textStream", ->
           spy = sinon.spy @child, "pushLine"
-          @mudStream.pushLine "foo", "bar"
+          @textStream.pushLine "foo", "bar"
           assert not spy.calledOnce

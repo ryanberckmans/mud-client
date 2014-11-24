@@ -192,10 +192,10 @@ function echo(htmlText) {
   }
 }
 
-rootMudStream = new MudStream();
+rootTextStream = new TextStream();
 ansiColorState = new AnsiColorState();
 
-rootMudStream.onPushLine(function(clearTextLine, domLine) {
+rootTextStream.onPushLine(function(clearTextLine, domLine) {
   ow_Write(domLine);
 });
 
@@ -206,11 +206,11 @@ function handle_message(msg) {
   // Each MUD msg begins with a newline, causing rawLines[0] to be the empty string during regular play
   // Since each rawLines translates into a line of output, rawLines[0] inserts an unnecessary blank line
   if (rawLines[0].length > 0) {
-    rootMudStream.pushLine(renderClearTextLine(rawLines[0]),renderDOMLine(ansiColorState, rawLines[0]));
+    rootTextStream.pushLine(renderClearTextLine(rawLines[0]),renderDOMLine(ansiColorState, rawLines[0]));
   }
 
   for(var i = 1, len = rawLines.length; i < len; ++i) {
-    rootMudStream.pushLine(renderClearTextLine(rawLines[i]),renderDOMLine(ansiColorState, rawLines[i]));
+    rootTextStream.pushLine(renderClearTextLine(rawLines[i]),renderDOMLine(ansiColorState, rawLines[i]));
   }
 }
 
