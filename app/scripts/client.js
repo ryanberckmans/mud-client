@@ -175,29 +175,16 @@ function set_disconnected()
 	m_conn_div.innerHTML = "<p style='font-size: 1.25em; font-weight: bold; color: #fff;'>DISCONNECTED</p>";
 }
 
-// htmlTextLine is a string that may contain newlines
-// newLines are rewritten as <br>, and any trailing newline is discarded
-function echo(htmlText) {
-  var htmlTextLines = htmlText.split("\n");
+echoStream = new EchoStream({jQuery: $});
 
-  // If the last character in htmlText is "\n", we want to discard the last element in htmlTextLines,
-  // since it's just an empty string. This has the same effect as htmlText.chomp() - no chomp() function exists in javascript
-  if (htmlTextLines[htmlTextLines.length-1].length < 1) htmlTextLines.pop();
-
-  var len = htmlTextLines.length;
-  if (len < 1) return;
-
-  // the first line in an echo isn't prepended with <br>, 
-  // this allows a user command to appear on the same line as the prompt
-  var domLine = $.parseHTML("<span class='echo_line echo_color'>" + htmlTextLines[0] + "</span>")[0];
-  ow_Write(domLine);
-
-  // subsequent echo lines, past the first, are prepended with <br>
-  for(var i = 1; i < len; ++i) {
-    domLine = $.parseHTML("<span class='echo_line echo_color'><br>" + htmlTextLines[i] + "</span>")[0];
-    ow_Write(domLine);
-  }
+// Todo: echo shouldn't be a global function, should inject echoStream as needed
+function echo(s) {
+  echoStream.pushRaw(s);
 }
+
+echoStream.onPushLine(function(clearTextLine, domLine) {
+  ow_Write(domLine);
+});
 
 mudBufferTextStream = new TextStream();
 fromMudAnsiColorStream.addChild(mudBufferTextStream);
