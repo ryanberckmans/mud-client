@@ -2,21 +2,36 @@
 
 A web client for playing online multiplayer text games.
 
-# Dependencies
+# Installation
+
+TODO - these instructions aren't great, sorry :-(. Need to split this into "How to develop mud-client" and "Use mud-client for your mud".
+
+## Hardcode relay.rb server endpoint
+
+To build or deloy mud-client, create the file `app/scripts/ws-host.js`, containing a single line of code which assigns a websocket endpoint to the global variable wshost:
+
+Example `app/scripts/ws-host.js`
+
+    wshost = "ws://noric.org:12346";
+
+WARNING - a `useref` directive in `app/index.html` expects the file `app/scripts/ws-host.js` to exist. Otherwise the build will fail with this cryptic error message:
+
+    events.js:74
+        throw TypeError('Uncaught, unspecified "error" event.');
 
 ## Build
 
 mud-client uses [gulpjs](https://github.com/gulpjs/gulp).
 
-1. npm install --global gulp
-2. npm install && bower install && cd test && bower install && cd ..
-3. gulp
+1. sass and ruby must be in your PATH
+2. npm install --global gulp
+3. npm install && bower install && cd test && bower install && cd ..
+4. gulp
 
 ## Deploy
 
-1. run `relay/relay.rb` on your server
-2. `js/ws-host.js` must be set to the relay.rb server endpoint
-3. deploy `dist/` to your webserver
+1. run `relay/relay.rb` on your server. `app/scripts/ws-host.js` must be set to this endpoint
+2. deploy `dist/` to your webserver
 
 ## Yeoman gulp-webapp
 
