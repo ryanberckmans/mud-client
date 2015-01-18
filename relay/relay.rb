@@ -67,8 +67,17 @@ module MudConnection
     end
   end
 
+  def connection_completed
+    @mud_client_connection.on_mud_connect
+    @connected = true
+  end
+
   def unbind
-    @mud_client_connection.on_mud_disconnect
+    if @connected
+      @mud_client_connection.on_mud_disconnect
+    else
+      @mud_client_connection.on_mud_connection_failed
+    end
   end
 end
 
@@ -93,16 +102,21 @@ module MudClientConnection
 
     @driver.on(:open) do |e|
       puts "#{@client_number} websocket handshake complete, connecting to mud"
+      @driver.text("\nConnecting to #{MUD}:#{MUD_PORT}\n")
       EM.connect(MUD, MUD_PORT, MudConnection) do |mud_connection| 
         @mud_connection = mud_connection
         @mud_connection.mud_client_connection = self
-        on_mud_connect
       end
     end
 
     @driver.on(:error)   { |e| puts "#{@client_number} error: #{e.message}" }
     @driver.on(:message) { |e| @mud_connection.send_data e.data }
-    @driver.on(:close)   { |e| puts "#{@client_number} closed connection by client"; close_connection_after_writing; @mud_connection.close_connection_after_writing if @mud_connection }
+    @driver.on(:close) do |e| 
+      puts "#{@client_number} closed connection by client"
+      @driver.text "\nYou closed the connection. Bye!\n"
+      close_connection_after_writing
+      @mud_connection.close_connection_after_writing if @mud_connection 
+    end
   end
 
   # WebSocket impl, do not touch
@@ -117,12 +131,18 @@ module MudClientConnection
 
   def on_mud_connect
     puts "#{@client_number} connected to mud"
-    @driver.text "\nInstructions:\n\n    Use 'map font 3'. If you have problems, use 'map font 1'\n    Semicolon and repetition work: 'ack;blink;/3 smile'\n\nWanted: expert to fix medievia.ttf so this can use 'map font 5'.\n"
+    @driver.text "\nConnected to #{MUD}:#{MUD_PORT} \\o/\n\nInstructions:\n\n    Use 'map font 3'. If you have problems, use 'map font 1'\n    Semicolon and repetition work: 'ack;blink;/3 smile'\n\nWanted: expert to fix medievia.ttf so this can use 'map font 5'.\n"
+  end
+
+  def on_mud_connection_failed
+    puts "#{@client_number} failed to connect to #{MUD}:#{MUD_PORT}, closing client connection"
+    @driver.text("\nFailed to connect to #{MUD}:#{MUD_PORT}. Sorry :(. Bye\n")
+    close_connection_after_writing
   end
 
   def on_mud_disconnect
     puts "#{@client_number} disconnected from mud, closing client connection"
-    @driver.text("Mud disconnected. Bye!")
+    @driver.text("\nConnection lost. Bye!\n")
     close_connection_after_writing
   end
 
