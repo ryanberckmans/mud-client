@@ -1,0 +1,32 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "app"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "bin"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "relay"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "test"
+		}
+	],
+	"settings":
+    {
+        "tab_size": 2
+    },
+    "build_systems":
+    [ 
+	    {
+	    	"name": "gulp",
+	    	"cmd": ["gulp", "test"]
+	    }
+    ]
+}
