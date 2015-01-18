@@ -69,13 +69,15 @@ module MudConnection
 
   def connection_completed
     @mud_client_connection.on_mud_connect
-    @connected = true
+    @connection_established = true
   end
 
   def unbind
-    if @connected
+    if @connection_established
+      @mud_client_connection.msg strip_telnet(@buffer) if @buffer
       @mud_client_connection.on_mud_disconnect
     else
+      raise "expected @buffer to be nil on connection failed" if @buffer
       @mud_client_connection.on_mud_connection_failed
     end
   end
@@ -142,7 +144,7 @@ module MudClientConnection
 
   def on_mud_disconnect
     puts "#{@client_number} disconnected from mud, closing client connection"
-    @driver.text("\nConnection lost. Bye!\n")
+    @driver.text("\nConnection to #{MUD}:#{MUD_PORT} lost. Bye!\n")
     close_connection_after_writing
   end
 
