@@ -7,3 +7,4 @@ test-dist
 app/bower_components
 test/bower_components
 ws-host.js
+*sublime-workspace
