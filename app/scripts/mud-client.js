@@ -1,13 +1,4 @@
 
-$(document).ready(function() {
-  var resizeUi = function() {
-    $("#interface").height($(window).height() - 20);
-    $("#output, #scroller, #right").height($("#interface").height() - 50);
-  }
-  resizeUi();
-  $(window).resize(resizeUi);
-});
-
 var mud_client = {
   
   input_grammar: inputGrammar,
