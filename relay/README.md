@@ -15,7 +15,7 @@ Relay.rb needs native extensions for eventmachine:
 
 By default, relay.rb listens for websocket connections on port 12346. The user's browser expects relay.rb on a hardcoded endpoint:
 
-1. Create the file wm_client/js/ws-host.js with the line, `wshost = 'ws://server-running-relay-rb.com:12346';`
+1. See `RELAY_ENDPOINT` in `app/scripts/main.coffee`
 
 # Running
 

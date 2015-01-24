@@ -8,16 +8,8 @@ TODO - these instructions aren't great, sorry :-(. Need to split this into "How 
 
 ## Hardcode relay.rb server endpoint
 
-To build or deloy mud-client, create the file `app/scripts/ws-host.js`, containing a single line of code which assigns a websocket endpoint to the global variable wshost:
-
-Example `app/scripts/ws-host.js`
-
-    wshost = "ws://noric.org:12346";
-
-WARNING - a `useref` directive in `app/index.html` expects the file `app/scripts/ws-host.js` to exist. Otherwise the build will fail with this cryptic error message:
-
-    events.js:74
-        throw TypeError('Uncaught, unspecified "error" event.');
+1. See `RELAY_ENDPOINT` in `app/scripts/main.coffee`
+2. See relay/README.md
 
 ## Build
 
@@ -30,7 +22,7 @@ mud-client uses [gulpjs](https://github.com/gulpjs/gulp).
 
 ## Deploy
 
-1. run `relay/relay.rb` on your server. `app/scripts/ws-host.js` must be set to this endpoint
+1. run `relay/relay.rb` on your server. `RELAY_ENDPOINT` in `app/scripts/main.coffee` must be set to this endpoint
 2. deploy `dist/` to your webserver
 
 ## Yeoman gulp-webapp
