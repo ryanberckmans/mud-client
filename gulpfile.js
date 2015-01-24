@@ -9,7 +9,7 @@ var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
-    return gulp.src('app/styles/main.scss')
+    return gulp.src('app/styles/*.scss')
         .pipe($.rubySass({
             style: 'expanded',
             precision: 10
