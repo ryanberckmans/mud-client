@@ -26,39 +26,18 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- TODO - clean up this html. Unnecessary elements from the PHuDBase days -->
         <div id="interface">
-            <div id="c_header">
-            </div>
+            <div id="c_header"></div>
             <div id="c_wrap">
                 <div id="c_output">
                     <div id="output" class="default_color">
                     </div>
                 </div>
-                <div id="c_right">
 
-                
-                    <div class="clear"></div>
-                
-                    <h3>Relay Connection</h3>
-                    <div id="connection_ws"></div>
-                
-                    <h3>MUD Connection</h3>
-                    <div id="connection_mud"></div>
-
-                    <h3>Client based on PHudBase</h3>
-                
-                    <div class="clear"></div>
-                    <div class="clear"></div>
-                    <div class="clear"></div>
-                
-                    <div id="autoscroll">Auto-scrolling Paused</div>    
-                </div>
-            
                 <div class="clear"></div>
-            
+
                 <div id="c_footer">
-                    <form autocomplete="off" id="data_form" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
+                    <form autocomplete="off" id="user_input_form" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
                         <input id="user_input" type="text" value="">
                     </form>
                 </div>
@@ -83,7 +62,6 @@
         <!-- endbuild -->
 
         <!-- build:js scripts/app.js -->
-        <script src="scripts/main.js"></script>
         <script src="scripts/render.js"></script>
         <script src="scripts/parser-grammars.js"></script>
         <script src="scripts/text-stream.js"></script>
@@ -91,8 +69,7 @@
         <script src="scripts/echo-stream.js"></script>
         <script src="scripts/buffer-stream.js"></script>
         <script src="scripts/mud-client.js"></script>
-        <script src="scripts/client.js"></script>
-        <script src="scripts/ws-host.js"></script>
+        <script src="scripts/main.js"></script>
         <!-- endbuild -->
     </body>
 </html>
