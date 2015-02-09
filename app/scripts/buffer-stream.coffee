@@ -6,7 +6,7 @@ class @BufferStream extends TextStream
   constructor: (params={}) ->
     super
     @outputElement = params.outputElement
-    @onPushLine @appendToBuffer
+    @onPushLine @appendToBuffer.bind(this)
 
   appendToBuffer: (clearTextLine, domLine) ->
     @outputElement.appendChild domLine
