@@ -17,7 +17,7 @@ cmd_history_up = []
 # Anything without a reference outside this file will be garbage collected.
 
 unless @mud_client?
-  @mud_client = {}
+  throw "fatal: expected mud_client to already exist"
 
 @mud_client.socket = socket
 
@@ -40,11 +40,11 @@ unless @mud_client?
 # self-contained, except for the passing of a div#id to setup the form on. app/index.html should contain
 # no user input code, except <div id="user_input_div"></div>.
 setupUI = ->
-  resizeUi = ->
+  onResize = ->
     $("#interface").height $(window).height() - 20
     $("#output").height $("#interface").height() - 50
-  resizeUi()
-  $(window).resize resizeUi
+  onResize()
+  $(window).resize onResize
 
 setupUserInput = ->
   userInputElementjQuery = $('#user_input')
