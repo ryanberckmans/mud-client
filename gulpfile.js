@@ -226,4 +226,4 @@ gulp.task('test:watch', ['test'], function() {
       'test/spec/**/*.{js,coffee}'], ['test']);
 });
 
-gulp.task('tw' ['test:watch']);
+gulp.task('tw', ['test:watch']);
