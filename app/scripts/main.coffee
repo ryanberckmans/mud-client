@@ -32,7 +32,7 @@ unless @mud_client?
 @cmd_history_down = cmd_history_down
 @cmd_history_up = cmd_history_up
 
-# -- END GLOBALS --
+# -- END EXPORTED GLOBALS --
 
 # Technically setupUI and setupUserInput should be linked somehow, since the user input form is a part of the UI.
 # All user input stuff will eventually live in user-input.coffee. Not sure where other UI stuff will live,
@@ -45,41 +45,6 @@ setupUI = ->
     $("#output").height $("#interface").height() - 50
   onResize()
   $(window).resize onResize
-
-setupUserInput = ->
-  userInputElementjQuery = $('#user_input')
-  userInputElement = userInputElementjQuery[0]
-
-  onKeyboardDownArrow = (evt) ->
-    if cmd_history_down.length > 0
-      cmd_history_up.push userInputElement.value
-      userInputElement.value = cmd_history_down.pop()
-    else
-      userInputElement.value = ""
-
-  onKeyboardUpArrow = (evt) ->
-    if cmd_history_up.length > 0
-      cmd_history_down.push userInputElement.value
-      userInputElement.value = cmd_history_up.pop()
-
-  keyboardHandlers = ->
-    userInputElementjQuery.keydown (evt) ->
-      if evt.keyCode == '40' # down arrow
-        evt.preventDefault()
-        onKeyboardDownArrow evt
-      else if evt.keyCode == '38' # up arrow
-        evt.preventDefault()
-        onKeyboardUpArrow evt
-  
-  userInputGUI = ->
-    userInputElement.value = ""
-    focusUserInput = -> userInputElementjQuery.focus()
-    $("#user_input_form").fadeIn 500, focusUserInput
-    $(window).blur  focusUserInput
-    $(window).click focusUserInput
-  
-  keyboardHandlers()
-  userInputGUI()
 
 setupTextStreams = ->
   fromMudAnsiColorStream = new AnsiColorStream
