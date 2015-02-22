@@ -3,11 +3,12 @@ CONTAINER_ID = "user-input"
 FORM_ID = "user-input-form"
 @INPUT_ID = "user-input-cli" # TODO, this global is used in mud-client.js. most things in mud-client.js, as well as inputGrammar, should be moved here.
 
-# TODO construct the element with DOM api instead of setting innerHtml. process_client_input shouldn't be a global rather closed over.
-# This is first step in migrating user input logic from index.html into a library
+# TODO construct the element with DOM api instead of setting innerHtml. process_client_input shouldn't be a global, rather closed over.
+# This is first step in migrating user input logic from index.html into a library.
+# Note: inline styles are temporary, should be moved to app.css once user-input code stabilizes.
 CONTAINER_INNER_HTML = '
-  <form autocomplete="off" id="' + FORM_ID + '" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
-      <input id="' + INPUT_ID + '" type="text" value="">
+  <form autocomplete="off" id="' + FORM_ID + '"onsubmit="mud_client.process_client_input(); return false;" style="text-align: center;">
+      <input id="' + INPUT_ID + '" type="text" value="" style="border: 1px solid #464646; width: 100%; padding: 5px;">
   </form>'
 
 @setupUserInput = ->
