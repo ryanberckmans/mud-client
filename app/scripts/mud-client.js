@@ -10,7 +10,7 @@ var mud_client = {
   },
   
   process_client_input: function() {
-    var input = document.getElementById("user_input").value;
+    var input = document.getElementById(INPUT_ID).value;
     
     if (cmd_history_down.length > 0 ) {
       cmd_history_up.push(input); // resave the old copy of a historical cmd we're browsing
@@ -50,7 +50,7 @@ var mud_client = {
       this.send(cmds.join(""));
     }
 	  
-	  document.getElementById("user_input").value = "";
+	  document.getElementById(INPUT_ID).value = "";
     return true;
   }
 };

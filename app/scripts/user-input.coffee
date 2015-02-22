@@ -1,10 +1,18 @@
 
-USER_INPUT_CONTAINER_ID = "user-input"
+CONTAINER_ID = "user-input"
+FORM_ID = "user-input-form"
+@INPUT_ID = "user-input-cli" # TODO, this global is used in mud-client.js. most things in mud-client.js, as well as inputGrammar, should be moved here.
 
-
+# TODO construct the element with DOM api instead of setting innerHtml. process_client_input shouldn't be a global rather closed over.
+# This is first step in migrating user input logic from index.html into a library
+CONTAINER_INNER_HTML = '
+  <form autocomplete="off" id="' + FORM_ID + '" style="display: none; text-align: center;" onsubmit="mud_client.process_client_input(); return false;">
+      <input id="' + INPUT_ID + '" type="text" value="">
+  </form>'
 
 @setupUserInput = ->
-  userInputElementjQuery = $('#user_input')
+  $('#' + CONTAINER_ID).html(CONTAINER_INNER_HTML)
+  userInputElementjQuery = $('#' + INPUT_ID)  
   userInputElement = userInputElementjQuery[0]
 
   onKeyboardDownArrow = (evt) ->
@@ -32,7 +40,7 @@ USER_INPUT_CONTAINER_ID = "user-input"
   userInputGUI = ->
     userInputElement.value = ""
     focusUserInput = -> userInputElementjQuery.focus()
-    $("#user_input_form").fadeIn 500, focusUserInput
+    $('#' + FORM_ID).fadeIn 500, focusUserInput
     $(window).blur  focusUserInput
     $(window).click focusUserInput
   
