@@ -9,27 +9,13 @@ var mud_client = {
     send_to_mud(cmd);
   },
   
-  process_client_input: function() {
-    var input = document.getElementById(INPUT_ID).value;
-    
-    if (cmd_history_down.length > 0 ) {
-      cmd_history_up.push(input); // resave the old copy of a historical cmd we're browsing
-    }
-
-    while ( cmd_history_down.length > 1 ) {
-      cmd_history_up.push( cmd_history_down.pop()); // save all the commands we scrolled through already
-    }
-    cmd_history_down.pop(); // never save the last cmd in down_arrow, because it is the transient coomand the user half-typed in. 
-    
-    if (input.length > 0) {
-      cmd_history_up.push(input); // save the current command unless its a simple return
-    }
-    
+  // Process a cmd as if the user had typed it
+  cmd: function(cmd) {
     var cmds = null;
     try {
-      cmds = this.input_parser.parse(input);
+      cmds = this.input_parser.parse(cmd);
     } catch (e) {
-      alert("error parsing:" + input );
+      alert("error parsing:" + cmd );
       cmds = [];
     }
 

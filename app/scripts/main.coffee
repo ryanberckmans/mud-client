@@ -9,8 +9,6 @@ RELAY_ENDPOINT = "ws://localhost:12346"
 fromMudAnsiColorStream = null
 echoStream = null
 socket = null
-cmd_history_down = []
-cmd_history_up = []
 
 # -- BEGIN MASTER GLOBALS --
 # CoffeeScript wraps this file in an anonymous function.
@@ -23,14 +21,11 @@ unless @mud_client?
 
 # -- END MASTER GLOBALS --
 
-
 # -- BEGIN EXPORTED GLOBALS --
 # These are globals declared in main.coffee and used by other components which don't have dependency injection yet
 
 @send_to_mud = (msg) -> socket.send msg
 @echo = (s) -> echoStream.pushRaw s
-@cmd_history_down = cmd_history_down
-@cmd_history_up = cmd_history_up
 
 # -- END EXPORTED GLOBALS --
 
