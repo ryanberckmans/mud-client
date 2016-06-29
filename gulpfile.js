@@ -2,7 +2,7 @@
 // generated on 2014-11-21 using generator-gulp-webapp 0.1.0
 // updated on 2015-2-21 by manually comparing output of generator-gulp-webapp 0.2.0
 
-require('harmonize')();
+// require('harmonize')();
 
 var gulp = require('gulp');
 var mainBowerFiles = require('main-bower-files');

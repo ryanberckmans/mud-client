@@ -2,7 +2,7 @@ require 'websocket/driver'
 require 'eventmachine'
 require 'json'
 
-MUD = "medievia.com"
+MUD = "localhost"
 MUD_PORT = 4000
 
 module MudConnection
@@ -57,13 +57,18 @@ module MudConnection
   end
 
   def receive_data data
+    puts data
     if @buffer
       data = @buffer + data
       @buffer = nil
     end
     msg, @buffer = split_by_TELNET_GA data
+    puts "after receiving data, client msg lenth=#{msg && msg.length}, buffer waiting for TELNET_GA length=#{@buffer && @buffer.length}"
     if msg
-      @mud_client_connection.msg strip_telnet(msg)
+      client_msg = strip_telnet msg
+      puts "NEW CLIENT MSG:"
+      puts client_msg
+      @mud_client_connection.msg client_msg
     end
   end
 
